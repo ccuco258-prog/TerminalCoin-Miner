@@ -1,0 +1,1028 @@
+import time
+import os
+import json
+import random
+import webbrowser
+import requests
+from colorama import init, Fore, Style
+import keyboard
+import re
+
+# Inicializa colorama para que los colores funcionen en la consola.
+init()
+
+# --- Variables del Juego ---
+SAVE_FILE = "terminalcoin_save.json"
+wallet = 0.0
+mining_speed = 0.1
+last_update_time = time.time()
+boost_active = False
+boost_end_time = 0
+boost_multiplier = 1
+unlocked_codes = [] 
+used_special_codes = []
+tv_helper_purchased = False
+mbc_purchased = False 
+bitcoin_monitor_purchased = False # NUEVA VARIABLE PARA EL PROGRAMA BITCOIN MONITOR
+
+# --- Códigos de recompensa por progreso ---
+codes = {
+    10: {"code": "FASTSTART", "reward_type": "speed_increase", "value": 0.5},
+    50: {"code": "TCBOOST", "reward_type": "boost", "value": 2, "duration": 60},
+    100: {"code": "MINERPRO", "reward_type": "speed_increase", "value": 1.0},
+    250: {"code": "SUPERBOOST", "reward_type": "boost", "value": 5, "duration": 90},
+    500: {"code": "GOLDENAGE", "reward_type": "speed_increase", "value": 5.0},
+    800: {"code": "MASTERMIND", "reward_type": "boost", "value": 10, "duration": 120},
+    1000: {"code": "ULTIMATE", "reward_type": "speed_increase", "value": 15.0},
+}
+
+# --- Catálogo de Mejoras y Boosts con precios y efectos ajustados ---
+upgrades = {
+    "mejora_hardware": {"cost": 100, "speed_increase": 0.5},
+    "optimizacion_software": {"cost": 500, "speed_increase": 2.0},
+    "ventilador_gpu": {"cost": 2500, "speed_increase": 10.0},
+}
+
+boosts = {
+    "boost_x2": {"cost": 150, "multiplier": 2, "duration": 60},
+    "boost_x10": {"cost": 1000, "multiplier": 10, "duration": 30},
+}
+
+# --- Catálogo de Canciones con enlaces ---
+SONGS_CATALOG = {
+    "1": {"title": "I Got No Time", "artist": "The Living Tombstone", "cost": 20, "url": "http://music.youtube.com/watch?v=PMF-V6NbzrY"}
+}
+
+def clear_screen():
+    """Limpia la consola para una mejor visualización."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def save_game():
+    """Guarda el estado actual del juego en un archivo JSON."""
+    data = {
+        "wallet": wallet,
+        "mining_speed": mining_speed,
+        "boost_active": boost_active,
+        "boost_end_time": boost_end_time,
+        "boost_multiplier": boost_multiplier,
+        "unlocked_codes": unlocked_codes,
+        "used_special_codes": used_special_codes,
+        "tv_helper_purchased": tv_helper_purchased,
+        "mbc_purchased": mbc_purchased,
+        "bitcoin_monitor_purchased": bitcoin_monitor_purchased # Guardamos el estado del nuevo programa
+    }
+    with open(SAVE_FILE, 'w') as f:
+        json.dump(data, f)
+    print("✅ Partida guardada con éxito.")
+    time.sleep(1)
+
+def load_game():
+    """Carga el estado del juego desde un archivo JSON si existe."""
+    global wallet, mining_speed, boost_active, boost_end_time, boost_multiplier, last_update_time, unlocked_codes, used_special_codes, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased
+    if os.path.exists(SAVE_FILE):
+        with open(SAVE_FILE, 'r') as f:
+            data = json.load(f)
+            wallet = data.get("wallet", 0.0)
+            mining_speed = data.get("mining_speed", 0.1)
+            boost_active = data.get("boost_active", False)
+            boost_end_time = data.get("boost_end_time", 0)
+            boost_multiplier = data.get("boost_multiplier", 1)
+            unlocked_codes = data.get("unlocked_codes", [])
+            used_special_codes = data.get("used_special_codes", [])
+            tv_helper_purchased = data.get("tv_helper_purchased", False)
+            mbc_purchased = data.get("mbc_purchased", False)
+            bitcoin_monitor_purchased = data.get("bitcoin_monitor_purchased", False)
+            last_update_time = time.time()
+        print("¡Partida cargada con éxito!")
+
+def check_for_new_codes():
+    """Verifica si se han desbloqueado nuevos códigos al alcanzar una cantidad de TC."""
+    for tc_amount, code_data in codes.items():
+        if wallet >= tc_amount and code_data["code"] not in unlocked_codes:
+            unlocked_codes.append(code_data["code"])
+            print(f"\n¡🎉 CÓDIGO DESBLOQUEADO! 🎉")
+            print(f"Has alcanzado los {tc_amount} TC. Tu nuevo código es: {code_data['code']}")
+            time.sleep(2)
+
+def update_wallet():
+    """Actualiza el monedero basándose en el tiempo transcurrido."""
+    global wallet, last_update_time, mining_speed, boost_active, boost_end_time, boost_multiplier
+    
+    current_time = time.time()
+    time_elapsed = current_time - last_update_time
+    
+    current_mining_speed = mining_speed * boost_multiplier
+    
+    wallet += time_elapsed * current_mining_speed
+    last_update_time = current_time
+    
+    if boost_active and current_time >= boost_end_time:
+        boost_active = False
+        boost_multiplier = 1
+        print("El boost ha finalizado.")
+        time.sleep(1)
+
+def get_crypto_price_display():
+    """Obtiene y formatea el precio de Bitcoin para mostrarlo en pantalla."""
+    try:
+        url = "https://api.coingecko.com/api/v3/simple/price"
+        params = {"ids": "bitcoin", "vs_currencies": "usd"}
+        response = requests.get(url, params=params, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        bitcoin_price = data.get("bitcoin", {}).get("usd", "Error")
+        if isinstance(bitcoin_price, (int, float)):
+            return f"💰 BTC: ${bitcoin_price:,.2f}"
+        return f"💰 BTC: {bitcoin_price}"
+    except requests.exceptions.RequestException:
+        return "❌ BTC: API Error"
+
+def display_terminalcoin_logo():
+    """Muestra el logo de la TerminalCoin usando caracteres ASCII."""
+    crypto_display = ""
+    if bitcoin_monitor_purchased:
+        crypto_display = get_crypto_price_display()
+        
+    print("---------------------------------------------")
+    print("        .---------------------.            ")
+    print("       /                       \           ")
+    print("      |          .-.          |          ")
+    print("      |          |T|          |          ")
+    print("      |          '-'          |          ")
+    print("       \                       /           ")
+    print("        `---------------------'            ")
+    print("            T E R M I N A L C O I N        ")
+    if bitcoin_monitor_purchased:
+        print(f"        {crypto_display}")
+    print("---------------------------------------------")
+
+def show_status():
+    """Muestra el estado actual del juego."""
+    print("--- ⛏️ TerminalCoin Miner ---")
+    print(f"Monedero: {wallet:.2f} TC")
+    print(f"Velocidad de minado: {mining_speed * boost_multiplier:.2f} TC/s")
+    if boost_active:
+        time_left = int(boost_end_time - time.time())
+        print(f"BOOST ACTIVO: {boost_multiplier}x - Quedan {time_left} segundos.")
+    print("\nOpciones:")
+    print("1. Comprar mejoras (Upgrades)")
+    print("2. Comprar boosts")
+    print("3. Ver catálogo de programas")
+    print("4. Ver y usar códigos")
+    print("5. Guardar partida")
+    print("6. Reproducir música")
+    print("7. Salir")
+
+def buy_upgrade():
+    """Permite comprar mejoras."""
+    global wallet, mining_speed
+    print("\n--- Catálogo de Mejoras ---")
+    for key, value in upgrades.items():
+        print(f"ID: {key} - Coste: {value['cost']} TC - Aumenta la velocidad en: {value['speed_increase']} TC/s")
+    
+    choice = input("Introduce el ID de la mejora a comprar (o 'salir'): ")
+    if choice in upgrades:
+        if wallet >= upgrades[choice]["cost"]:
+            wallet -= upgrades[choice]["cost"]
+            mining_speed += upgrades[choice]["speed_increase"]
+            print(f"¡Compra exitosa! Velocidad actual: {mining_speed:.2f} TC/s")
+        else:
+            print("No tienes suficientes TerminalCoins.")
+    elif choice.lower() != 'salir':
+        print("ID de mejora no válido.")
+    input("\nPulsa Enter para continuar...")
+
+def buy_boost():
+    """Permite comprar boosts momentáneos."""
+    global wallet, boost_active, boost_end_time, boost_multiplier
+    print("\n--- Catálogo de Boosts ---")
+    for key, value in boosts.items():
+        print(f"ID: {key} - Coste: {value['cost']} TC - Multiplicador: {value['multiplier']}x - Duración: {value['duration']}s")
+    
+    choice = input("Introduce el ID del boost a comprar (o 'salir'): ")
+    if choice in boosts:
+        if not boost_active:
+            if wallet >= boosts[choice]["cost"]:
+                wallet -= boosts[choice]["cost"]
+                boost_multiplier = boosts[choice]["multiplier"]
+                boost_end_time = time.time() + boosts[choice]["duration"]
+                boost_active = True
+                print("¡Boost activado! ¡A minar más rápido!")
+            else:
+                print("No tienes suficientes TerminalCoins.")
+        else:
+            print("Ya tienes un boost activo. Espera a que termine.")
+    elif choice.lower() != 'salir':
+        print("ID de boost no válido.")
+    input("\nPulsa Enter para continuar...")
+
+def show_programs_store():
+    """Simula una tienda de programas."""
+    global wallet, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased
+    print("\n--- Tienda de Programas ---")
+    print("¡Utiliza tus TerminalCoins para comprar otros programas desarrollados con Python!")
+    print("\nProgramas disponibles:")
+    
+    # Programa TV Helper
+    if not tv_helper_purchased:
+        print("1. 'TV Helper': Te ayuda a encontrar la mejor televisión para ti.")
+        print(f"   Costo: 500 TC")
+    else:
+        print("1. 'TV Helper' (Comprado)")
+        
+    # Nuevo programa MonsterBattleCreator
+    if not mbc_purchased:
+        print("2. 'MonsterBattleCreator': Un juego de lucha donde creas y entrenas un monstruo.")
+        print(f"   Costo: 3000 TC")
+    else:
+        print("2. 'MonsterBattleCreator' (Comprado)")
+        
+    # Nuevo programa BitcoinMonitor
+    if not bitcoin_monitor_purchased:
+        print("3. 'BitcoinMonitor': Muestra el valor en vivo de Bitcoin.")
+        print(f"   Costo: 1000 TC")
+    else:
+        print("3. 'BitcoinMonitor' (Comprado)")
+        
+    choice = input("\nIntroduce el número del programa que quieres comprar o ejecutar (o 'salir'): ")
+    
+    if choice == '1':
+        if not tv_helper_purchased:
+            if wallet >= 500:
+                wallet -= 500
+                tv_helper_purchased = True
+                print("¡Compra exitosa! Ahora puedes usar el programa 'TV Helper'.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este programa.")
+        else:
+            run_tv_helper()
+            
+    elif choice == '2':
+        if not mbc_purchased:
+            if wallet >= 3000:
+                wallet -= 3000
+                mbc_purchased = True
+                print("¡Compra exitosa! Ahora puedes usar el programa 'MonsterBattleCreator'.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este programa.")
+        else:
+            run_monster_battle_creator()
+            
+    elif choice == '3':
+        if not bitcoin_monitor_purchased:
+            if wallet >= 1000:
+                wallet -= 1000
+                bitcoin_monitor_purchased = True
+                print("¡Compra exitosa! Ahora puedes ver el valor del Bitcoin en la pantalla principal.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este programa.")
+        else:
+            print("El programa ya está activo y se muestra en la pantalla principal.")
+
+    elif choice.lower() != 'salir':
+        print("Opción no válida.")
+    
+    input("\nPulsa Enter para volver al menú principal...")
+
+def manage_codes():
+    """Permite al usuario ver y usar los códigos."""
+    global mining_speed, boost_active, boost_end_time, boost_multiplier, wallet
+    
+    print("\n--- Códigos Disponibles ---")
+    print("Códigos por hitos:")
+    if not unlocked_codes:
+        print("Aún no has desbloqueado ningún código por hito. ¡Sigue minando!")
+    else:
+        for code in unlocked_codes:
+            print(f"- {code}")
+            
+    print("\n--- Introduce un Código ---")
+    choice = input("Introduce el código que quieres usar (o 'salir'): ")
+    
+    # Manejar el código especial TC1
+    if choice.upper() == "TC1":
+        if "TC1" in used_special_codes:
+            print("Este código ya ha sido usado.")
+        else:
+            wallet += 1000
+            used_special_codes.append("TC1")
+            print("¡Código TC1 usado! Se han añadido 1000 TC a tu monedero.")
+    
+    else:
+        # Manejar los códigos de hito
+        found = False
+        for tc_amount, code_data in codes.items():
+            if code_data["code"] == choice and choice in unlocked_codes:
+                found = True
+                if code_data["reward_type"] == "speed_increase":
+                    mining_speed += code_data["value"]
+                    unlocked_codes.remove(choice)
+                    print(f"Código '{choice}' usado. ¡Tu velocidad de minado ha aumentado en {code_data['value']} TC/s!")
+                elif code_data["reward_type"] == "boost":
+                    if not boost_active:
+                        boost_multiplier = code_data["value"]
+                        boost_end_time = time.time() + code_data["duration"]
+                        boost_active = True
+                        unlocked_codes.remove(choice)
+                        print(f"Código '{choice}' usado. ¡Has activado un boost de {code_data['value']}x!")
+                    else:
+                        print("Ya tienes un boost activo. No puedes usar este código ahora.")
+                break
+        
+        if not found and choice.lower() != 'salir':
+            print("Código no válido o no desbloqueado.")
+            
+    input("\nPulsa Enter para continuar...")
+
+def play_music():
+    """Permite al usuario comprar y reproducir una canción."""
+    global wallet
+    print("\n--- Reproductor de Música ---")
+    print("Canciones disponibles:")
+    for key, song in SONGS_CATALOG.items():
+        print(f"[{key}] - '{song['title']}' de {song['artist']} - Coste: {song['cost']} TC")
+        
+    choice = input("\nIntroduce el número de la canción a comprar y reproducir (o 'salir'): ")
+    
+    if choice in SONGS_CATALOG:
+        song_to_play = SONGS_CATALOG[choice]
+        if wallet >= song_to_play['cost']:
+            wallet -= song_to_play['cost']
+            print(f"¡Has comprado la canción! Abriendo '{song_to_play['title']}' en tu navegador... 🎶")
+            webbrowser.open_new_tab(song_to_play['url'])
+            time.sleep(2)
+        else:
+            print("❌ No tienes suficientes TerminalCoins para comprar esta canción.")
+    elif choice.lower() != 'salir':
+        print("❌ Opción no válida.")
+    
+    input("\nPulsa Enter para volver al menú principal...")
+
+# --- FUNCIONALIDAD DEL PROGRAMA TV HELPER ---
+def run_tv_helper():
+    clear_screen()
+    print("--- Bienvenido a 'TV Helper' ---")
+    print("Este programa te ayudará a encontrar la mejor televisión para ti.")
+    time.sleep(2)
+    
+    class Televisor:
+        """Clase que representa un televisor real con sus especificaciones."""
+        def __init__(self, marca, modelo, tamano, resolucion, frecuencia, procesador, precio):
+            self.marca = marca
+            self.modelo = modelo
+            self.tamano = tamano
+            self.resolucion = resolucion
+            self.frecuencia = frecuencia
+            self.procesador = procesador
+            self.precio = precio
+
+    def obtener_datos_usuario():
+        """Función para obtener las preferencias del usuario de forma interactiva."""
+        print("--- ¡Bienvenido al Buscador de Televisores! ---")
+        
+        while True:
+            respuesta_marca = input("¿Tienes una marca de televisor que te interese? (sí/no): ").lower()
+            if respuesta_marca in ["si", "sí"]:
+                marca_preferida = input("¿Cuál marca prefieres? ").capitalize()
+                break
+            elif respuesta_marca in ["no", "n"]:
+                marca_preferida = None
+                break
+            else:
+                print("❌ Respuesta no válida. Por favor, responde 'sí' o 'no'.")
+
+        while True:
+            try:
+                tamano_deseado = int(input("¿Qué tamaño de televisor (en pulgadas) buscas? "))
+                break
+            except ValueError:
+                print("❌ Por favor, ingresa un valor numérico válido.")
+
+        resoluciones_disponibles = ["720p", "1080p", "4K", "8K"]
+        while True:
+            resolucion_deseada = input("¿Qué resolución quieres? (720p, 1080p, 4K, 8K): ").upper()
+            if resolucion_deseada.lower() in [r.lower() for r in resoluciones_disponibles]:
+                resolucion_deseada = resolucion_deseada.lower().replace("p", "P")
+                break
+            else:
+                print("❌ Resolución no válida. Por favor, elige una de la lista.")
+
+        while True:
+            try:
+                presupuesto_maximo = float(input("¿Cuál es tu presupuesto máximo en euros? (€): "))
+                if presupuesto_maximo <= 0:
+                    print("❌ Por favor, ingresa un valor positivo.")
+                    continue
+                break
+            except ValueError:
+                print("❌ Por favor, ingresa un valor numérico válido.")
+        
+        return marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo
+
+    # --- Base de datos de televisores reales (Ampliada) ---
+    DB_TELEVISORES_REALES = [
+        # Gama alta (OLED/QLED)
+        Televisor("LG", "OLED C3", 55, "4K", 120, "Alpha 9 Gen6", 1599.00),
+        Televisor("LG", "OLED G3", 65, "4K", 120, "Alpha 9 Gen6", 2499.00),
+        Televisor("Samsung", "S95C OLED", 65, "4K", 144, "Neural Quantum 4K", 2799.00),
+        Televisor("Sony", "BRAVIA XR A95K", 65, "4K", 120, "Cognitive Processor XR", 2999.00),
+        Televisor("LG", "OLED B3", 55, "4K", 120, "Alpha 7 Gen6", 1299.00),
+        # Gama media (Mini-LED/QLED)
+        Televisor("TCL", "C845", 65, "4K", 144, "AiPQ Processor 3.0", 1199.00),
+        Televisor("Hisense", "U8K", 65, "4K", 144, "Hi-View Engine", 999.00),
+        Televisor("Samsung", "QN90C Neo QLED", 55, "4K", 120, "Neural Quantum 4K", 1499.00),
+        Televisor("LG", "Qned81", 65, "4K", 120, "Alpha 7 Gen6", 999.00),
+        Televisor("Philips", "The One PUS8808", 55, "4K", 120, "P5 Perfect Picture", 799.00),
+        # Gama baja (LED/LCD)
+        Televisor("Hisense", "A6K", 50, "4K", 60, "Quad Core", 429.00),
+        Televisor("TCL", "TCL 4K S4505B", 55, "4K", 60, "AiPQ", 399.00),
+        Televisor("Samsung", "CU7105", 55, "4K", 50, "Crystal Processor 4K", 449.00),
+        Televisor("Xiaomi", "TV A2", 43, "4K", 60, "Cortex-A55", 359.00),
+        Televisor("LG", "UR7800", 50, "4K", 50, "Alpha 5 Gen6", 459.00),
+        # Televisores Full HD y HD
+        Televisor("Hisense", "A4K", 32, "1080p", 60, "Quad Core", 219.00),
+        Televisor("Samsung", "T5305", 43, "1080p", 60, "Hyper Real", 299.00),
+        Televisor("Xiaomi", "TV F2", 43, "1080p", 60, "A55 Quad-Core", 299.00),
+        Televisor("TOSHIBA", "32CV510U", 32, "720p", 60, "no tiene", 180.00),
+        Televisor("LG", "LQ5700", 32, "720p", 60, "Alpha 5 Gen5", 229.00),
+        Televisor("Philips", "32PFS6906", 32, "1080p", 60, "P5", 249.00),
+        # Televisores 8K
+        Televisor("Samsung", "QN900C", 75, "8K", 144, "Neural Quantum 8K", 6999.00),
+        Televisor("LG", "QNED99", 75, "8K", 120, "Alpha 9 Gen5", 3999.00),
+    ]
+
+    def encontrar_mejor_tv(db_televisores, marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo):
+        """Encuentra y recomienda el mejor televisor según los criterios del usuario."""
+        opciones_filtradas = []
+        
+        for tv in db_televisores:
+            if marca_preferida and tv.marca.capitalize() != marca_preferida:
+                continue
+            if tv.precio > presupuesto_maximo:
+                continue
+            if tv.tamano != tamano_deseado:
+                continue
+            if tv.resolucion.upper() != resolucion_deseada.upper():
+                continue
+            opciones_filtradas.append(tv)
+        
+        if not opciones_filtradas:
+            print("\n🤔 No se encontraron resultados con todos los criterios. Ampliando la búsqueda...")
+            opciones_filtradas = []
+            for tv in db_televisores:
+                if tv.precio > presupuesto_maximo:
+                    continue
+                if tv.resolucion.upper() != resolucion_deseada.upper():
+                    continue
+                opciones_filtradas.append(tv)
+
+        if not opciones_filtradas:
+            print("\n🤔 No se encontraron resultados con los criterios de resolución y presupuesto. Mostrando las mejores opciones dentro de su presupuesto.")
+            opciones_filtradas = []
+            for tv in db_televisores:
+                if tv.precio > presupuesto_maximo:
+                    continue
+                opciones_filtradas.append(tv)
+
+        if not opciones_filtradas:
+            return []
+
+        opciones_con_score = []
+        for tv in opciones_filtradas:
+            score = 0
+            
+            resolucion_map = {"720p": 10, "1080p": 20, "4K": 50, "8K": 70}
+            score += resolucion_map.get(tv.resolucion.lower(), 0)
+            
+            if tv.frecuencia >= 120:
+                score += 40
+            elif tv.frecuencia >= 60:
+                score += 20
+            
+            if "Alpha" in tv.procesador or "Neural" in tv.procesador or "Cognitive" in tv.procesador:
+                score += 30
+            else:
+                score += 10
+
+            if tv.precio > 0:
+                score = (score / tv.precio) * 1000
+
+            opciones_con_score.append((score, tv))
+            
+        opciones_con_score.sort(key=lambda x: x[0], reverse=True)
+        
+        return opciones_con_score
+
+    def mostrar_recomendacion(opciones_filtradas):
+        """Muestra los 3 mejores televisores encontrados."""
+        print("\n" + "="*50)
+        print("          ✨ ¡Tu Televisor Ideal! ✨")
+        print("="*50)
+        
+        if not opciones_filtradas:
+            print("\nLo sentimos, no pudimos encontrar un televisor que se ajuste a tus criterios. \nTe recomendamos ajustar tu presupuesto o considerar otras opciones.")
+        else:
+            print("\nAquí tienes las 3 mejores opciones que se adaptan a tus necesidades:")
+            for i, (score, tv) in enumerate(opciones_filtradas[:3]):
+                print(f"\n{i+1}. {tv.marca} {tv.modelo}:")
+                print(f"    - **Tamaño**: {tv.tamano} pulgadas")
+                print(f"    - **Resolución**: {tv.resolucion}")
+                print(f"    - **Frecuencia**: {tv.frecuencia} Hz")
+                print(f"    - **Procesador de Imagen**: {tv.procesador}")
+                print(f"    - **Precio**: {tv.precio:.2f}€")
+
+    # --- Ejecución del programa ---
+    marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo = obtener_datos_usuario()
+    
+    mejores_opciones = encontrar_mejor_tv(DB_TELEVISORES_REALES, marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo)
+    mostrar_recomendacion(mejores_opciones)
+    
+    input("\nPulsa Enter para volver a TerminalCoin...")
+
+# --- FUNCIONALIDAD DEL PROGRAMA MONSTER BATTLE CREATOR ---
+def run_monster_battle_creator():
+    """Ejecuta el juego Monster Battle Creator."""
+    
+    # Definición del archivo de guardado
+    ARCHIVO_PROGRESO = 'progreso.json'
+
+    # --- Definiciones de Partes del Monstruo ---
+    opciones_cabeza = [
+        ("Cabeza de Cíclope", "Un solo ojo y un cuerno en espiral.", "  _.-.\n  /  _ \\\n |  (o)  |\n  \\  _  /\n   `---'"),
+        ("Cabeza de Dragón", "Dientes afilados y un aliento ardiente.", "  /vvvvv\\\n ( O   O )\n  \\  ^  /\n   \\___/"),
+        ("Cabeza de Alien", "Grandes ojos negros y una forma alargada.", "  /\\_/\\\n | `~` |\n  \\___/"),
+        ("Cabeza de Demonio", "Cuernos retorcidos y una mirada malvada.", " .-'--'-.\n/        \\\n|  O    O  |\n \\    --   /\n  `--__--'")
+    ]
+
+    opciones_cuerpo = [
+        ("Cuerpo de Golem", "Fuerte y robusto, hecho de piedra.", "  [O.O]\n  /   \\\n /_____\\"),
+        ("Cuerpo de Slime", "Viscoso y gelatinoso, capaz de cambiar de forma.", "  ~~~~~\n /     \\\n|_______|"),
+        ("Cuerpo de Araña", "Ocho patas peludas y un cuerpo redondo.", "  /\\__/\\\n /      \\\n |______|"),
+        ("Cuerpo de Momia", "Vendado y frágil, pero con gran resistencia.", " |---o---|\n |-------|\n  \\-----/")
+    ]
+        
+    opciones_brazos = [
+        ("Brazos de Robot", "Fuertes pero lentos, hechos de metal.", "  _|_|_\n (_____)"),
+        ("Brazos de Mono", "Ágiles pero débiles, con pulgares oponibles.", "  /\\ /\\\n ( (o) )\n  \\   /"),
+        ("Brazos de Dragón", "Lentos, pero fuertes, con garras afiladas.", "  || ||\n  \\ //\n   V V"),
+        ("Brazos de Tentáculos", "Flexibles y largos, para agarrar objetos.", " ()()()()\n (      )\n  \\____/")
+    ]
+
+    opciones_piernas = [
+        ("Piernas Humanoides", "Equilibradas y versátiles.", "  |_|  |_|\n  | |  | |"),
+        ("Piernas de Centauro", "Fuertes y rápidas, con pezuñas.", "  | |  | |\n (  ) (  )"),
+        ("Piernas de Lagarto", "Capaces de escalar superficies verticales.", "  /  \\  /  \\\n (____)(____)"),
+        ("Piernas de Araña", "Múltiples patas para una movilidad superior.", "  / \\ / \\\n /   \   \\\n  -   -")
+    ]
+
+    # --- Arte ASCII de los trofeos ---
+    TROFEO_CAMPEON = """
+         _
+        | |
+        | |
+        | |
+        | |
+       /---\
+      |-----|
+      `-----'
+       || ||
+       `-' `-'
+    """
+
+    TROFEO_VETERANO = """
+           /`\\
+          ( @ )
+         /`\\ /`\\
+        /   Y   \
+       |  (.)  |
+       `-------'
+    """
+
+    TROFEO_LEYENDA = """
+         _ _
+        | | |
+       / / /
+      | |_| |
+      |_____|
+      `-----'
+       || ||
+       `-' `-'
+    """
+
+    # Nuevas listas de nombres para enemigos y jefes
+    nombres_rivales = [
+        "Goro el Implacable", "Sombra de la Furia", "Gólem Dorado", "Lama Tóxica",
+        "El Guerrero Oxidado", "Besta de las Profundidades", "El Acechador Sombrío",
+        "El Vigilante de la Cripta"
+    ]
+
+    nombres_jefes = [
+        "El Devorador de Mundos", "El Dragón Espectral", "El Titán Ancestral",
+        "La Reina Silente", "El Amo de las Sombras"
+    ]
+
+    # --- Funciones de Juego ---
+    def limpiar_pantalla():
+        """Limpia la consola."""
+        os.system('cls' if os.name == 'nt' else 'clear')
+
+    def mostrar_encabezado():
+        """Muestra el título del programa."""
+        limpiar_pantalla()
+        print(Fore.CYAN + Style.BRIGHT + "=" * 60)
+        print("== " + "C R E A D O R   Y   T O R N E O   D E   M O N S T R U O S".center(54) + " ==")
+        print("=" * 60)
+        print(Style.RESET_ALL)
+        print(Fore.WHITE + "¡Crea a tu monstruo para el torneo! " + Style.RESET_ALL)
+        time.sleep(1)
+
+    def seleccionar_parte(titulo, opciones):
+        """
+        Función genérica para seleccionar una parte del monstruo.
+        """
+        while True:
+            limpiar_pantalla()
+            print(Fore.YELLOW + "--- " + titulo + " ---" + Style.RESET_ALL)
+            for i, (nombre, descripcion, _) in enumerate(opciones, 1):
+                print(f"{Fore.WHITE}{i}. {nombre}: {descripcion}{Style.RESET_ALL}")
+            
+            eleccion = input(f"\nElige tu opción (1, 2, 3 o 4): ")
+            
+            try:
+                indice = int(eleccion) - 1
+                if 0 <= indice < len(opciones):
+                    return opciones[indice]
+                else:
+                    print(Fore.RED + "Opción inválida. Inténtalo de nuevo." + Style.RESET_ALL)
+                    time.sleep(2)
+            except ValueError:
+                print(Fore.RED + "Entrada no válida. Por favor, ingresa un número." + Style.RESET_ALL)
+                time.sleep(2)
+
+    def generar_monstruo_aleatorio(nombre, es_boss=False):
+        """Genera un monstruo con partes y colores aleatorios."""
+        partes = {
+            "cabeza": random.choice(opciones_cabeza),
+            "cuerpo": random.choice(opciones_cuerpo),
+            "brazos": random.choice(opciones_brazos),
+            "piernas": random.choice(opciones_piernas)
+        }
+        colores_disponibles = [Fore.RED, Fore.GREEN, Fore.BLUE, Fore.MAGENTA, Fore.YELLOW, Fore.CYAN]
+        color1_elegido = random.choice(colores_disponibles)
+        
+        vida_base = 100
+        if es_boss:
+            vida_base = 200
+        
+        return {
+            "nombre": nombre,
+            "vida": float(vida_base),
+            "energia": 100.0,
+            "partes": partes,
+            "color1": color1_elegido,
+            "color2": random.choice([c for c in colores_disponibles if c != color1_elegido])
+        }
+        
+    def mostrar_monstruo(monstruo):
+        """Muestra un monstruo con sus partes y colores."""
+        print(f"\n{Style.BRIGHT}{monstruo['nombre']}{Style.RESET_ALL}\n")
+        print(monstruo['color1'] + "      " + monstruo['partes']['cabeza'][2])
+        print(monstruo['color2'] + "    " + monstruo['partes']['cuerpo'][2])
+        print(monstruo['color1'] + "  " + monstruo['partes']['brazos'][2])
+        print(monstruo['color2'] + "  " + monstruo['partes']['piernas'][2])
+        print(Style.RESET_ALL)
+
+    def mostrar_monstruos_en_batalla(jugador, oponente):
+        """Muestra a ambos monstruos uno al lado del otro, bien formados y con sus colores."""
+        jugador_partes_split = [part[2].split('\n') for part in jugador['partes'].values()]
+        oponente_partes_split = [part[2].split('\n') for part in oponente['partes'].values()]
+
+        jugador_full_lines = []
+        jugador_colors = [jugador['color1'], jugador['color2'], jugador['color1'], jugador['color2']]
+        for i, part_lines in enumerate(jugador_partes_split):
+            for line in part_lines:
+                jugador_full_lines.append(jugador_colors[i] + line + Style.RESET_ALL)
+                
+        oponente_full_lines = []
+        oponente_colors = [oponente['color1'], oponente['color2'], oponente['color1'], oponente['color2']]
+        for i, part_lines in enumerate(oponente_partes_split):
+            for line in part_lines:
+                oponente_full_lines.append(oponente_colors[i] + line + Style.RESET_ALL)
+
+        max_height = max(len(jugador_full_lines), len(oponente_full_lines))
+        jugador_full_lines += [''] * (max_height - len(jugador_full_lines))
+        oponente_full_lines += [''] * (max_height - len(oponente_full_lines))
+
+        column_width = 30
+        print(f"\n{Style.BRIGHT}{jugador['nombre']:<{column_width}}{oponente['nombre']:>{column_width}}{Style.RESET_ALL}")
+        
+        for i in range(max_height):
+            def remove_ansi_escapes(s):
+                return re.sub(r'\x1b\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]', '', s)
+            
+            clean_jugador_line = remove_ansi_escapes(jugador_full_lines[i])
+            clean_oponente_line = remove_ansi_escapes(oponente_full_lines[i])
+            
+            jugador_padding = column_width - len(clean_jugador_line)
+            oponente_padding = column_width - len(clean_oponente_line)
+            
+            print(f"{jugador_full_lines[i]}{' ' * jugador_padding}{' ' * oponente_padding}{oponente_full_lines[i]}")
+
+    def mostrar_barras(vida_jugador, vida_oponente, energia_jugador):
+        """Muestra las barras de vida y energía."""
+        vida_jugador_clamped = max(0, vida_jugador)
+        vida_oponente_clamped = max(0, vida_oponente)
+        energia_jugador_clamped = max(0, energia_jugador)
+
+        barra_vida_jugador = "█" * int(vida_jugador_clamped / 10)
+        barra_vida_oponente = "█" * int(vida_oponente_clamped / 10)
+        barra_energia = "█" * int(energia_jugador_clamped / 10)
+        
+        print(f"\n{Fore.GREEN}{Style.BRIGHT}VIDA:{Style.RESET_ALL} {Fore.GREEN}{barra_vida_jugador}{Fore.WHITE:<10}{Fore.RED}{Style.BRIGHT}VS{Style.RESET_ALL}{Fore.WHITE:>10}{Fore.RED}{barra_vida_oponente}{Fore.RED} VIDA:{Style.RESET_ALL}")
+        print(f"{Fore.BLUE}ENERGÍA:{Style.RESET_ALL} {Fore.BLUE}{barra_energia}{Style.RESET_ALL}")
+        
+    def pedir_combinacion(ronda, tipo_ataque="defensa"):
+        """
+        Pide una combinación de teclas al usuario y verifica si se presiona a tiempo.
+        El tiempo de espera es más corto en rondas más altas.
+        """
+        
+        keys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm']
+        
+        combinacion = random.sample(keys, 2)
+        key1, key2 = combinacion[0], combinacion[1]
+        
+        tiempo_espera = 2.0 - (ronda * 0.2)
+        if tiempo_espera < 0.5:
+            tiempo_espera = 0.5
+            
+        if tipo_ataque == "defensa":
+            print(f"\n¡EL RIVAL ATACA! Rápido, presiona la combinación '{Fore.YELLOW}{key1} + {key2}{Style.RESET_ALL}' para defenderte.")
+            print(f"Tienes {tiempo_espera:.2f} segundos para reaccionar...")
+        else:
+            print(f"\n¡ES TU TURNO! Presiona la combinación '{Fore.YELLOW}{key1} + {key2}{Style.RESET_ALL}' para atacar.")
+            print(f"Tienes {tiempo_espera:.2f} segundos para reaccionar...")
+
+        start_time = time.time()
+        
+        while time.time() - start_time < tiempo_espera:
+            if keyboard.is_pressed(key1) and keyboard.is_pressed(key2):
+                return True
+                
+        return False
+
+    def simular_batalla_street_fighter(jugador, oponente, es_boss, ronda):
+        """Simula una batalla interactiva al estilo de Street Fighter con combinaciones de teclas."""
+        
+        vida_jugador = float(jugador['vida'])
+        energia_jugador = float(jugador['energia'])
+        vida_oponente = float(oponente['vida'])
+
+        print(Fore.CYAN + "\n=== ¡COMIENZA LA BATALLA! ===" + Style.RESET_ALL)
+        input("Presiona Enter para continuar...")
+        
+        while vida_jugador > 0 and vida_oponente > 0:
+            limpiar_pantalla()
+            mostrar_barras(vida_jugador, vida_oponente, energia_jugador)
+            mostrar_monstruos_en_batalla(jugador, oponente)
+            
+            # --- Fase de Defensa del Jugador ---
+            print(Fore.RED + "\n--- FASE DE DEFENSA ---" + Style.RESET_ALL)
+            if pedir_combinacion(ronda, tipo_ataque="defensa"):
+                print(Fore.GREEN + "\n¡Combinación exitosa! Has creado una barrera y te has defendido del ataque del rival." + Style.RESET_ALL)
+                time.sleep(2)
+            else:
+                daño_oponente = random.randint(15, 30)
+                if es_boss and ronda == 4:
+                    print(f"¡El ataque del jefe es devastador!")
+                    daño_oponente = vida_jugador + 10
+                vida_jugador -= daño_oponente
+                print(Fore.RED + f"\n¡Combinación fallida! {oponente['nombre']} te golpea. Recibes {daño_oponente} de daño." + Style.RESET_ALL)
+                time.sleep(2)
+            
+            if vida_jugador <= 0:
+                break
+                
+            # --- Fase de Ataque del Jugador ---
+            print(Fore.BLUE + "\n--- FASE DE ATAQUE ---" + Style.RESET_ALL)
+            if pedir_combinacion(ronda, tipo_ataque="ofensiva"):
+                daño_jugador = random.randint(20, 40)
+                vida_oponente -= daño_jugador
+                print(Fore.GREEN + f"\n¡Combinación exitosa! ¡Has atacado a {oponente['nombre']} y le has hecho {daño_jugador} de daño!" + Style.RESET_ALL)
+                time.sleep(2)
+            else:
+                print(Fore.RED + "\n¡Combinación fallida! Pierdes tu turno de ataque." + Style.RESET_ALL)
+                time.sleep(2)
+
+        jugador['vida'] = vida_jugador
+        jugador['energia'] = energia_jugador
+        
+        if vida_jugador <= 0:
+            return oponente
+        else:
+            return jugador
+
+    def cargar_progreso():
+        """Carga el progreso del juego desde el archivo de guardado."""
+        if os.path.exists(ARCHIVO_PROGRESO):
+            try:
+                with open(ARCHIVO_PROGRESO, 'r') as f:
+                    return json.load(f)
+            except json.JSONDecodeError:
+                return {'victorias': 0, 'trofeos': []}
+        return {'victorias': 0, 'trofeos': []}
+
+    def guardar_progreso(progreso):
+        """Guarda el progreso del juego en el archivo de guardado."""
+        with open(ARCHIVO_PROGRESO, 'w') as f:
+            json.dump(progreso, f, indent=4)
+
+    def mostrar_sala_trofeos(progreso):
+        """Muestra la sala de trofeos del jugador."""
+        limpiar_pantalla()
+        print(Fore.YELLOW + Style.BRIGHT + "=== SALA DE TROFEOS ===" + Style.RESET_ALL)
+        print(Fore.WHITE + f"Victorias en el Torneo: {progreso['victorias']}\n" + Style.RESET_ALL)
+        
+        if "leyenda" in progreso['trofeos']:
+            print(Fore.CYAN + "--- Trofeo de Leyenda ---" + Style.RESET_ALL)
+            print(Fore.CYAN + TROFEO_LEYENDA + Style.RESET_ALL)
+            print(Fore.WHITE + "¡Has ganado 10 torneos! ¡Eres una leyenda del combate!\n" + Style.RESET_ALL)
+        
+        if "veterano" in progreso['trofeos']:
+            print(Fore.GREEN + "--- Trofeo de Veterano ---" + Style.RESET_ALL)
+            print(Fore.GREEN + TROFEO_VETERANO + Style.RESET_ALL)
+            print(Fore.WHITE + "¡Has ganado 5 torneos! Un verdadero veterano.\n" + Style.RESET_ALL)
+
+        if "campeon" in progreso['trofeos']:
+            print(Fore.YELLOW + "--- Trofeo de Campeón ---" + Style.RESET_ALL)
+            print(Fore.YELLOW + TROFEO_CAMPEON + Style.RESET_ALL)
+            print(Fore.WHITE + "¡Has derrotado al Jefe Final y ganado un torneo!\n" + Style.RESET_ALL)
+        
+        if not progreso['trofeos']:
+            print(Fore.WHITE + "Aún no tienes trofeos. ¡Gana el torneo para conseguir el primero!\n" + Style.RESET_ALL)
+        
+        input(Fore.BLUE + "Presiona Enter para volver al menú principal..." + Style.RESET_ALL)
+    
+    # Bucle principal del juego Monster Battle Creator
+    while True:
+        progreso = cargar_progreso()
+        
+        limpiar_pantalla()
+        print(Fore.CYAN + Style.BRIGHT + "=" * 60)
+        print("== " + "M E N Ú   P R I N C I P A L".center(54) + " ==")
+        print("=" * 60)
+        print(Style.RESET_ALL)
+        print(Fore.WHITE + "1. ¡Comenzar un nuevo torneo!" + Style.RESET_ALL)
+        print(Fore.YELLOW + "2. Ver mi Sala de Trofeos" + Style.RESET_ALL)
+        print(Fore.RED + "3. Salir" + Style.RESET_ALL)
+        
+        opcion = input("\nElige una opción: ")
+        
+        if opcion == '1':
+            mostrar_encabezado()
+            time.sleep(1)
+            
+            print(Fore.GREEN + "\n--- CREA A TU MONSTRUO PARA EL TORNEO ---" + Style.RESET_ALL)
+            _, descripcion_cabeza, arte_cabeza = seleccionar_parte("Selecciona una cabeza para tu monstruo", opciones_cabeza)
+            _, descripcion_cuerpo, arte_cuerpo = seleccionar_parte("Ahora, selecciona un cuerpo", opciones_cuerpo)
+            _, descripcion_brazos, arte_brazos = seleccionar_parte("Y por último, elige unos brazos", opciones_brazos)
+            _, descripcion_piernas, arte_piernas = seleccionar_parte("Finalmente, elige unas piernas", opciones_piernas)
+            
+            nombre_jugador = input("\n¡Ponle un nombre a tu campeón!: ")
+
+            monstruo_jugador = generar_monstruo_aleatorio(nombre_jugador)
+            monstruo_jugador["partes"] = {
+                "cabeza": ("Cabeza", descripcion_cabeza, arte_cabeza),
+                "cuerpo": ("Cuerpo", descripcion_cuerpo, arte_cuerpo),
+                "brazos": ("Brazos", descripcion_brazos, arte_brazos),
+                "piernas": ("Piernas", descripcion_piernas, arte_piernas)
+            }
+
+            limpiar_pantalla()
+            print(Fore.GREEN + Style.BRIGHT + "=" * 50)
+            print("== " + "¡T U   M O N S T R U O   H A   S I D O   C R E A D O !".center(44) + " ==")
+            print("=" * 50 + Style.RESET_ALL)
+            mostrar_monstruo(monstruo_jugador)
+            print(Fore.WHITE + "\n--- Características de tu campeón ---" + Style.RESET_ALL)
+            print(f"{Fore.WHITE}CABEZA: {descripcion_cabeza}")
+            print(f"{Fore.WHITE}CUERPO: {descripcion_cuerpo}")
+            print(f"{Fore.WHITE}BRAZOS: {descripcion_brazos}")
+            print(f"{Fore.WHITE}PIERNAS: {descripcion_piernas}{Style.RESET_ALL}")
+            input(Fore.BLUE + "\nPresiona Enter para comenzar el torneo..." + Style.RESET_ALL)
+            
+            # --- TUTORIAL DE JUEGO ---
+            limpiar_pantalla()
+            print(Fore.CYAN + Style.BRIGHT + "=== TUTORIAL DE COMBATE ===" + Style.RESET_ALL)
+            print(Fore.WHITE + "¡Bienvenido al Torneo de Monstruos! Para ganar, deberás dominar las combinaciones de teclas.")
+            print("La batalla se divide en dos fases por turno:")
+            print(f"\n{Fore.RED}{Style.BRIGHT}1. FASE DE DEFENSA:{Style.RESET_ALL} El rival te atacará.")
+            print(f"   Debes presionar una combinación de 2 teclas (ej: 'a' + 's') para defenderte.")
+            print(f"   Si lo logras, te defenderás. Si fallas, recibirás daño.")
+            print(f"\n{Fore.BLUE}{Style.BRIGHT}2. FASE DE ATAQUE:{Style.RESET_ALL} Es tu turno.")
+            print(f"   Debes presionar una nueva combinación de 2 teclas para atacar.")
+            print(f"   Si lo consigues, dañarás al rival. Si no, perderás el turno.")
+            print(f"\n{Fore.YELLOW}{Style.BRIGHT}¡Importante!:{Style.RESET_ALL} El tiempo para reaccionar se reduce en cada ronda.")
+            print("   En la batalla final, deberás ser extremadamente rápido para sobrevivir.")
+            input(Fore.BLUE + "\nPresiona Enter para continuar y comenzar la primera batalla..." + Style.RESET_ALL)
+
+            # --- FASE 2: EL TORNEO ---
+            rivales_torneo = random.sample(nombres_rivales, 3)
+            nombre_jefe_final = random.choice(nombres_jefes)
+            rivales_torneo.append(nombre_jefe_final)
+            
+            torneo_ganado = False
+            
+            for i, nombre_rival in enumerate(rivales_torneo):
+                es_boss = (nombre_rival == nombre_jefe_final)
+                limpiar_pantalla()
+                if es_boss:
+                    print(Fore.RED + f"--- ¡EL JEFE FINAL! ---" + Style.RESET_ALL)
+                    oponente = generar_monstruo_aleatorio(nombre_rival, es_boss=True)
+                else:
+                    print(Fore.YELLOW + f"--- BATALLA {i+1} DE {len(rivales_torneo)} ---" + Style.RESET_ALL)
+                    oponente = generar_monstruo_aleatorio(nombre_rival)
+
+                print(f"\n¡Tu monstruo {monstruo_jugador['nombre']} se enfrenta a {oponente['nombre']}!")
+                input("Presiona Enter para luchar...")
+
+                ganador = simular_batalla_street_fighter(monstruo_jugador, oponente, es_boss, i+1)
+
+                if ganador['nombre'] == monstruo_jugador['nombre']:
+                    print(Fore.GREEN + f"\n¡Has derrotado a {oponente['nombre']}! ¡Felicidades!" + Style.RESET_ALL)
+                    if es_boss:
+                        print(Fore.YELLOW + Style.BRIGHT + "\n¡¡¡HAS DERROTADO AL JEFE FINAL Y GANADO EL TORNEO!!!" + Style.RESET_ALL)
+                        torneo_ganado = True
+                        break
+                    input("\nPresiona Enter para pasar a la siguiente batalla...")
+                else:
+                    print(Fore.RED + f"\n¡Has sido derrotado por {oponente['nombre']}! ¡El torneo ha terminado!" + Style.RESET_ALL)
+                    break
+
+            # Actualizar el progreso al final del torneo
+            if torneo_ganado:
+                progreso['victorias'] += 1
+                if "campeon" not in progreso['trofeos']:
+                    progreso['trofeos'].append('campeon')
+                if progreso['victorias'] >= 5 and "veterano" not in progreso['trofeos']:
+                    progreso['trofeos'].append('veterano')
+                    print(Fore.GREEN + "\n¡Has desbloqueado el Trofeo de Veterano!" + Style.RESET_ALL)
+                if progreso['victorias'] >= 10 and "leyenda" not in progreso['trofeos']:
+                    progreso['trofeos'].append('leyenda')
+                    print(Fore.CYAN + "\n¡Has desbloqueado el Trofeo de Leyenda! ¡Eres un maestro!" + Style.RESET_ALL)
+            
+            guardar_progreso(progreso)
+
+            # Comprobar el resultado final del juego
+            if monstruo_jugador['vida'] > 0:
+                limpiar_pantalla()
+                print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
+                print("== " + "¡VICTORIA! ¡ERES EL CAMPEÓN DEL TORNEO!".center(44) + " ==")
+                print("=" * 50 + Style.RESET_ALL)
+                mostrar_monstruo(monstruo_jugador)
+                print(Fore.GREEN + "\n¡Tu monstruo ha vencido a todos los rivales y al JEFE FINAL!" + Style.RESET_ALL)
+            
+            print("\n¿Quieres jugar de nuevo? (Presiona Enter para reiniciar)")
+            input()
+            
+        elif opcion == '2':
+            mostrar_sala_trofeos(progreso)
+            
+        elif opcion == '3':
+            print("Volviendo al menú principal...")
+            break
+            
+        else:
+            print(Fore.RED + "Opción no válida. Por favor, elige 1, 2 o 3." + Style.RESET_ALL)
+            time.sleep(2)
+
+# --- Bucle principal del juego ---
+if __name__ == "__main__":
+    load_game()
+    while True:
+        clear_screen()
+        display_terminalcoin_logo()
+        update_wallet()
+        check_for_new_codes()
+        show_status()
+        
+        user_input = input("Elige una opción: ")
+        
+        if user_input == '1':
+            buy_upgrade()
+        elif user_input == '2':
+            buy_boost()
+        elif user_input == '3':
+            show_programs_store()
+        elif user_input == '4':
+            manage_codes()
+        elif user_input == '5':
+            save_game()
+        elif user_input == '6':
+            play_music()
+        elif user_input == '7':
+            save_game()
+            print("Saliendo del juego...")
+            break
+        else:
+            print("Opción no válida. Inténtalo de nuevo.")
+            time.sleep(1)
