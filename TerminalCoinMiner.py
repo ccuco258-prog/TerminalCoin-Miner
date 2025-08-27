@@ -23,7 +23,10 @@ unlocked_codes = []
 used_special_codes = []
 tv_helper_purchased = False
 mbc_purchased = False 
-bitcoin_monitor_purchased = False # NUEVA VARIABLE PARA EL PROGRAMA BITCOIN MONITOR
+bitcoin_monitor_purchased = False
+rickroll_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
+idiot_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
+freddy_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
 
 # --- Códigos de recompensa por progreso ---
 codes = {
@@ -69,7 +72,10 @@ def save_game():
         "used_special_codes": used_special_codes,
         "tv_helper_purchased": tv_helper_purchased,
         "mbc_purchased": mbc_purchased,
-        "bitcoin_monitor_purchased": bitcoin_monitor_purchased # Guardamos el estado del nuevo programa
+        "bitcoin_monitor_purchased": bitcoin_monitor_purchased,
+        "rickroll_sticker_purchased": rickroll_sticker_purchased,
+        "idiot_sticker_purchased": idiot_sticker_purchased,
+        "freddy_sticker_purchased": freddy_sticker_purchased
     }
     with open(SAVE_FILE, 'w') as f:
         json.dump(data, f)
@@ -78,7 +84,7 @@ def save_game():
 
 def load_game():
     """Carga el estado del juego desde un archivo JSON si existe."""
-    global wallet, mining_speed, boost_active, boost_end_time, boost_multiplier, last_update_time, unlocked_codes, used_special_codes, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased
+    global wallet, mining_speed, boost_active, boost_end_time, boost_multiplier, last_update_time, unlocked_codes, used_special_codes, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased, rickroll_sticker_purchased, idiot_sticker_purchased, freddy_sticker_purchased
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, 'r') as f:
             data = json.load(f)
@@ -92,6 +98,9 @@ def load_game():
             tv_helper_purchased = data.get("tv_helper_purchased", False)
             mbc_purchased = data.get("mbc_purchased", False)
             bitcoin_monitor_purchased = data.get("bitcoin_monitor_purchased", False)
+            rickroll_sticker_purchased = data.get("rickroll_sticker_purchased", False)
+            idiot_sticker_purchased = data.get("idiot_sticker_purchased", False)
+            freddy_sticker_purchased = data.get("freddy_sticker_purchased", False)
             last_update_time = time.time()
         print("¡Partida cargada con éxito!")
 
@@ -171,7 +180,8 @@ def show_status():
     print("4. Ver y usar códigos")
     print("5. Guardar partida")
     print("6. Reproducir música")
-    print("7. Salir")
+    print("7. Ver y usar stickers") # NUEVO MENU
+    print("8. Salir")
 
 def buy_upgrade():
     """Permite comprar mejoras."""
@@ -357,6 +367,156 @@ def play_music():
         print("❌ Opción no válida.")
     
     input("\nPulsa Enter para volver al menú principal...")
+
+def show_stickers_store():
+    """Muestra y gestiona la compra y uso de stickers."""
+    global wallet, rickroll_sticker_purchased, idiot_sticker_purchased, freddy_sticker_purchased
+    
+    print("\n--- Tienda de Stickers ---")
+    print("¡Compra y colecciona stickers con arte ASCII!")
+    print("\nStickers disponibles:")
+    
+    # Sticker Rickroll
+    if not rickroll_sticker_purchased:
+        print("1. 'Rickroll': ¡Una broma clásica! Te enviará a un video sorpresa.")
+        print(f"   Costo: 10,000 TC")
+    else:
+        print("1. 'Rickroll' (Comprado)")
+        
+    # Sticker "Eres un idiota"
+    if not idiot_sticker_purchased:
+        print("2. 'Virus, eres un idiota': Un mensaje en pantalla... ¡tranquilo, no es un virus!")
+        print(f"   Costo: 20,000 TC")
+    else:
+        print("2. 'Virus, eres un idiota' (Comprado)")
+        
+    # Sticker Freddy Fazbear
+    if not freddy_sticker_purchased:
+        print("3. 'Freddy Fazbear': ¡El famoso animatrónico en tu terminal!")
+        print(f"   Costo: 30,000 TC")
+    else:
+        print("3. 'Freddy Fazbear' (Comprado)")
+        
+    choice = input("\nIntroduce el número del sticker que quieres comprar o usar (o 'salir'): ")
+
+    if choice == '1':
+        if not rickroll_sticker_purchased:
+            if wallet >= 10000:
+                wallet -= 10000
+                rickroll_sticker_purchased = True
+                print("¡Compra exitosa! Ahora puedes usar el sticker 'Rickroll'.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+        else:
+            run_rickroll()
+
+    elif choice == '2':
+        if not idiot_sticker_purchased:
+            if wallet >= 20000:
+                wallet -= 20000
+                idiot_sticker_purchased = True
+                print("¡Compra exitosa! Ahora puedes usar el sticker 'Virus, eres un idiota'.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+        else:
+            run_idiot_sticker()
+
+    elif choice == '3':
+        if not freddy_sticker_purchased:
+            if wallet >= 30000:
+                wallet -= 30000
+                freddy_sticker_purchased = True
+                print("¡Compra exitosa! Ahora puedes usar el sticker 'Freddy Fazbear'.")
+            else:
+                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+        else:
+            run_freddy_sticker()
+
+    elif choice.lower() != 'salir':
+        print("Opción no válida.")
+
+    input("\nPulsa Enter para volver al menú principal...")
+
+def run_rickroll():
+    """Abre un enlace de Rickroll en el navegador."""
+    print("¡Has sido rickrolleado!")
+    webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    time.sleep(2)
+    
+def run_idiot_sticker():
+    """Muestra un mensaje de 'virus' en ASCII."""
+    clear_screen()
+    print(Fore.RED + "==========================================================")
+    print("  ¡HAS SIDO INFECTADO! VIRUS.EXE DETECTADO EN TU SISTEMA")
+    print("==========================================================")
+    print("          .---.")
+    print("         /     \\")
+    print("        |   _   |")
+    print("        |  (o)  |")
+    print("        |   _   |")
+    print("         \\     /")
+    print("          `---'")
+    print("==========================================================")
+    print(Fore.RED + "           ¡ERES UN IDIOTA!")
+    print(Fore.YELLOW + "            (Pero no un virus, eh.)")
+    print(Fore.RED + "==========================================================")
+    print(Style.RESET_ALL)
+    input("\nPresiona Enter para continuar...")
+    
+def run_freddy_sticker():
+    """Simula una animación GIF de Freddy Fazbear con arte ASCII."""
+    frames = [
+        # Frame 1: Normal
+        """
+  .-.
+ (o.o)
+ | ^ |
+ '--'
+""",
+        # Frame 2: Parpadeo
+        """
+  .-.
+ (-.-)
+ | ^ |
+ '--'
+""",
+        # Frame 3: Con la mano arriba
+        """
+  .-.
+ (o.o)
+ | ^ |
+ '--'
+   _
+ _/ |
+|  |_
+| / \\
+""",
+        # Frame 4: Mano en alto
+        """
+  .-.
+ (o.o)
+ | ^ |
+ '--'
+   _
+ _/|
+|  |
+|  |
+"""
+    ]
+    
+    print("¡Cuidado con Freddy!")
+    time.sleep(1)
+    
+    for _ in range(3): # Repetir la animación 3 veces
+        for frame in frames:
+            clear_screen()
+            print(Fore.BLUE + Style.BRIGHT + "   F R E D D Y  F A Z B E A R" + Style.RESET_ALL)
+            print(Fore.CYAN + frame + Style.RESET_ALL)
+            time.sleep(0.3)
+    
+    clear_screen()
+    print("¡Freddy se ha ido! Por ahora...")
+    time.sleep(1)
 
 # --- FUNCIONALIDAD DEL PROGRAMA TV HELPER ---
 def run_tv_helper():
@@ -1020,6 +1180,8 @@ if __name__ == "__main__":
         elif user_input == '6':
             play_music()
         elif user_input == '7':
+            show_stickers_store()
+        elif user_input == '8':
             save_game()
             print("Saliendo del juego...")
             break
