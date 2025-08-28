@@ -24,9 +24,257 @@ used_special_codes = []
 tv_helper_purchased = False
 mbc_purchased = False 
 bitcoin_monitor_purchased = False
-rickroll_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
-idiot_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
-freddy_sticker_purchased = False # NUEVA VARIABLE PARA EL STICKER
+rickroll_sticker_purchased = False
+idiot_sticker_purchased = False
+freddy_sticker_purchased = False
+current_language = 'es' # Idioma por defecto
+
+# --- Diccionario de traducciones ---
+translations = {
+    'es': {
+        'menu_title': "TerminalCoin Miner",
+        'wallet': "Monedero: {:.2f} TC",
+        'mining_speed': "Velocidad de minado: {:.2f} TC/s",
+        'boost_active': "BOOST ACTIVO: {}x - Quedan {} segundos.",
+        'options_menu': "Opciones:",
+        'buy_upgrades': "1. Comprar mejoras (Upgrades)",
+        'buy_boosts': "2. Comprar boosts",
+        'view_programs': "3. Ver catálogo de programas",
+        'view_codes': "4. Ver y usar códigos",
+        'save_game': "5. Guardar partida",
+        'play_music': "6. Reproducir música",
+        'view_stickers': "7. Ver y usar stickers",
+        'change_language': "8. Cambiar Idioma",
+        'exit_game': "9. Salir",
+        'choice_prompt': "Elige una opción: ",
+        'invalid_option': "Opción no válida. Inténtalo de nuevo.",
+        'game_saved': "✅ Partida guardada con éxito.",
+        'game_loaded': "¡Partida cargada con éxito!",
+        'code_unlocked': "\n¡🎉 CÓDIGO DESBLOQUEADO! 🎉\nHas alcanzado los {} TC. Tu nuevo código es: {}",
+        'boost_ended': "El boost ha finalizado.",
+        'upgrades_catalog': "Catálogo de Mejoras",
+        'id_cost_speed': "ID: {} - Coste: {} TC - Aumenta la velocidad en: {} TC/s",
+        'enter_upgrade_id': "Introduce el ID de la mejora a comprar (o 'salir'): ",
+        'purchase_successful_speed': "¡Compra exitosa! Velocidad actual: {:.2f} TC/s",
+        'not_enough_tc': "No tienes suficientes TerminalCoins.",
+        'invalid_upgrade_id': "ID de mejora no válido.",
+        'press_enter_to_continue': "\nPulsa Enter para continuar...",
+        'boosts_catalog': "Catálogo de Boosts",
+        'id_cost_multiplier_duration': "ID: {} - Coste: {} TC - Multiplicador: {}x - Duración: {}s",
+        'enter_boost_id': "Introduce el ID del boost a comprar (o 'salir'): ",
+        'boost_activated': "¡Boost activado! ¡A minar más rápido!",
+        'boost_already_active': "Ya tienes un boost activo. Espera a que termine.",
+        'invalid_boost_id': "ID de boost no válido.",
+        'codes_available': "Códigos Disponibles",
+        'milestone_codes': "Códigos por hitos:",
+        'no_codes_unlocked': "Aún no has desbloqueado ningún código por hito. ¡Sigue minando!",
+        'enter_code': "\n--- Introduce un Código ---\nIntroduce el código que quieres usar (o 'salir'): ",
+        'code_already_used': "Este código ya ha sido usado.",
+        'tc1_code_used': "¡Código TC1 usado! Se han añadido 1000 TC a tu monedero.",
+        'code_used_speed_increase': "Código '{}' usado. ¡Tu velocidad de minado ha aumentado en {} TC/s!",
+        'code_used_boost': "Código '{}' usado. ¡Has activado un boost de {}x!",
+        'invalid_or_unlocked_code': "Código no válido o no desbloqueado.",
+        'music_player': "Reproductor de Música",
+        'songs_available': "Canciones disponibles:",
+        'song_info': "[{}] - '{}' de {} - Coste: {} TC",
+        'purchase_song_prompt': "\nIntroduce el número de la canción a comprar y reproducir (o 'salir'): ",
+        'song_purchased_opening': "¡Has comprado la canción! Abriendo '{}' en tu navegador... 🎶",
+        'not_enough_tc_song': "❌ No tienes suficientes TerminalCoins para comprar esta canción.",
+        'invalid_option_song': "❌ Opción no válida.",
+        'programs_store': "Tienda de Programas",
+        'store_intro': "¡Utiliza tus TerminalCoins para comprar otros programas desarrollados con Python!",
+        'programs_available': "Programas disponibles:",
+        'tv_helper': "'TV Helper': Te ayuda a encontrar la mejor televisión para ti.",
+        'cost': "Costo: {} TC",
+        'purchased': "(Comprado)",
+        'mbc_program': "'MonsterBattleCreator': Un juego de lucha donde creas y entrenas un monstruo.",
+        'bitcoin_monitor': "'BitcoinMonitor': Muestra el valor en vivo de Bitcoin.",
+        'buy_or_run_program': "\nIntroduce el número del programa que quieres comprar o ejecutar (o 'salir'): ",
+        'purchase_successful_program': "¡Compra exitosa! Ahora puedes usar el programa '{}'.",
+        'not_enough_tc_program': "No tienes suficientes TerminalCoins para comprar este programa.",
+        'program_already_active': "El programa ya está activo y se muestra en la pantalla principal.",
+        'stickers_store': "Tienda de Stickers",
+        'stickers_intro': "¡Compra y colecciona stickers con arte ASCII!",
+        'rickroll_sticker': "'Rickroll': ¡Una broma clásica! Te enviará a un video sorpresa.",
+        'virus_sticker': "'Virus, eres un idiota': Un mensaje en pantalla... ¡tranquilo, no es un virus!",
+        'freddy_sticker': "'Freddy Fazbear': ¡El famoso animatrónico en tu terminal!",
+        'buy_or_use_sticker': "\nIntroduce el número del sticker que quieres comprar o usar (o 'salir'): ",
+        'sticker_purchase_successful': "¡Compra exitosa! Ahora puedes usar el sticker '{}'.",
+        'not_enough_tc_sticker': "No tienes suficientes TerminalCoins para comprar este sticker.",
+        'rickrolled_message': "¡Has sido rickrolleado!",
+        'virus_message_1': "¡HAS SIDO INFECTADO! VIRUS.EXE DETECTADO EN TU SISTEMA",
+        'virus_message_2': "¡ERES UN IDIOTA!",
+        'virus_message_3': "(Pero no un virus, eh.)",
+        'press_enter_to_continue_virus': "\nPresiona Enter para continuar...",
+        'freddy_message_1': "¡Cuidado con Freddy!",
+        'freddy_message_2': "Freddy se ha ido! Por ahora...",
+        'language_options': "--- Opciones de Idioma ---\nElige tu idioma (escribe el código):\n- es (Español)\n- en (Inglés)\n- de (Alemán)",
+        'language_change_successful': "Idioma cambiado a {}.",
+        'invalid_language': "Idioma no válido. Volviendo al menú principal."
+    },
+    'en': {
+        'menu_title': "TerminalCoin Miner",
+        'wallet': "Wallet: {:.2f} TC",
+        'mining_speed': "Mining Speed: {:.2f} TC/s",
+        'boost_active': "BOOST ACTIVE: {}x - {} seconds left.",
+        'options_menu': "Options:",
+        'buy_upgrades': "1. Buy Upgrades",
+        'buy_boosts': "2. Buy Boosts",
+        'view_programs': "3. View Program Catalog",
+        'view_codes': "4. View and Use Codes",
+        'save_game': "5. Save Game",
+        'play_music': "6. Play Music",
+        'view_stickers': "7. View and Use Stickers",
+        'change_language': "8. Change Language",
+        'exit_game': "9. Exit",
+        'choice_prompt': "Choose an option: ",
+        'invalid_option': "Invalid option. Please try again.",
+        'game_saved': "✅ Game saved successfully.",
+        'game_loaded': "Game loaded successfully!",
+        'code_unlocked': "\n¡🎉 CODE UNLOCKED! 🎉\nYou have reached {} TC. Your new code is: {}",
+        'boost_ended': "The boost has ended.",
+        'upgrades_catalog': "Upgrades Catalog",
+        'id_cost_speed': "ID: {} - Cost: {} TC - Increases speed by: {} TC/s",
+        'enter_upgrade_id': "Enter the ID of the upgrade to buy (or 'exit'): ",
+        'purchase_successful_speed': "Purchase successful! Current speed: {:.2f} TC/s",
+        'not_enough_tc': "You do not have enough TerminalCoins.",
+        'invalid_upgrade_id': "Invalid upgrade ID.",
+        'press_enter_to_continue': "\nPress Enter to continue...",
+        'boosts_catalog': "Boosts Catalog",
+        'id_cost_multiplier_duration': "ID: {} - Cost: {} TC - Multiplier: {}x - Duration: {}s",
+        'enter_boost_id': "Enter the ID of the boost to buy (or 'exit'): ",
+        'boost_activated': "Boost activated! Mine faster!",
+        'boost_already_active': "You already have an active boost. Wait for it to end.",
+        'invalid_boost_id': "Invalid boost ID.",
+        'codes_available': "Available Codes",
+        'milestone_codes': "Milestone codes:",
+        'no_codes_unlocked': "You haven't unlocked any milestone codes yet. Keep mining!",
+        'enter_code': "\n--- Enter a Code ---\nEnter the code you want to use (or 'exit'): ",
+        'code_already_used': "This code has already been used.",
+        'tc1_code_used': "Code TC1 used! 1000 TC have been added to your wallet.",
+        'code_used_speed_increase': "Code '{}' used. Your mining speed has increased by {} TC/s!",
+        'code_used_boost': "Code '{}' used. You have activated a boost of {}x!",
+        'invalid_or_unlocked_code': "Invalid or unlocked code.",
+        'music_player': "Music Player",
+        'songs_available': "Available songs:",
+        'song_info': "[{}] - '{}' by {} - Cost: {} TC",
+        'purchase_song_prompt': "\nEnter the number of the song to buy and play (or 'exit'): ",
+        'song_purchased_opening': "You have purchased the song! Opening '{}' in your browser... 🎶",
+        'not_enough_tc_song': "❌ You do not have enough TerminalCoins to buy this song.",
+        'invalid_option_song': "❌ Invalid option.",
+        'programs_store': "Program Store",
+        'store_intro': "Use your TerminalCoins to buy other programs developed with Python!",
+        'programs_available': "Available programs:",
+        'tv_helper': "'TV Helper': Helps you find the best TV for you.",
+        'cost': "Cost: {} TC",
+        'purchased': "(Purchased)",
+        'mbc_program': "'MonsterBattleCreator': A fighting game where you create and train a monster.",
+        'bitcoin_monitor': "'BitcoinMonitor': Shows the live value of Bitcoin.",
+        'buy_or_run_program': "\nEnter the number of the program you want to buy or run (or 'exit'): ",
+        'purchase_successful_program': "Purchase successful! You can now use the '{}' program.",
+        'not_enough_tc_program': "You do not have enough TerminalCoins to buy this program.",
+        'program_already_active': "The program is already active and is displayed on the main screen.",
+        'stickers_store': "Sticker Store",
+        'stickers_intro': "Buy and collect stickers with ASCII art!",
+        'rickroll_sticker': "'Rickroll': A classic prank! It will send you to a surprise video.",
+        'virus_sticker': "'Virus, you're an idiot': A message on the screen... don't worry, it's not a virus!",
+        'freddy_sticker': "'Freddy Fazbear': The famous animatronic on your terminal!",
+        'buy_or_use_sticker': "\nEnter the number of the sticker you want to buy or use (or 'exit'): ",
+        'sticker_purchase_successful': "Purchase successful! You can now use the '{}' sticker.",
+        'not_enough_tc_sticker': "You do not have enough TerminalCoins to buy this sticker.",
+        'rickrolled_message': "You've been rickrolled!",
+        'virus_message_1': "YOU HAVE BEEN INFECTED! VIRUS.EXE DETECTED ON YOUR SYSTEM",
+        'virus_message_2': "YOU ARE AN IDIOT!",
+        'virus_message_3': "(But not a virus, huh.)",
+        'press_enter_to_continue_virus': "\nPress Enter to continue...",
+        'freddy_message_1': "Watch out for Freddy!",
+        'freddy_message_2': "Freddy is gone! For now...",
+        'language_options': "--- Language Options ---\nChoose your language (enter the code):\n- es (Spanish)\n- en (English)\n- de (German)",
+        'language_change_successful': "Language changed to {}.",
+        'invalid_language': "Invalid language. Returning to the main menu."
+    },
+    'de': {
+        'menu_title': "TerminalCoin-Miner",
+        'wallet': "Geldbörse: {:.2f} TC",
+        'mining_speed': "Mining-Geschwindigkeit: {:.2f} TC/s",
+        'boost_active': "BOOST AKTIV: {}x - Noch {} Sekunden.",
+        'options_menu': "Optionen:",
+        'buy_upgrades': "1. Upgrades kaufen",
+        'buy_boosts': "2. Boosts kaufen",
+        'view_programs': "3. Programm-Katalog ansehen",
+        'view_codes': "4. Codes ansehen und benutzen",
+        'save_game': "5. Spiel speichern",
+        'play_music': "6. Musik abspielen",
+        'view_stickers': "7. Sticker ansehen und benutzen",
+        'change_language': "8. Sprache ändern",
+        'exit_game': "9. Beenden",
+        'choice_prompt': "Wähle eine Option: ",
+        'invalid_option': "Ungültige Option. Bitte versuche es erneut.",
+        'game_saved': "✅ Spiel erfolgreich gespeichert.",
+        'game_loaded': "Spiel erfolgreich geladen!",
+        'code_unlocked': "\n¡🎉 CODE FREIGESCHALTET! 🎉\nDu hast {} TC erreicht. Dein neuer Code ist: {}",
+        'boost_ended': "Der Boost ist beendet.",
+        'upgrades_catalog': "Upgrade-Katalog",
+        'id_cost_speed': "ID: {} - Kosten: {} TC - Erhöht die Geschwindigkeit um: {} TC/s",
+        'enter_upgrade_id': "Gib die ID des Upgrades ein, das du kaufen möchtest (oder 'exit'): ",
+        'purchase_successful_speed': "Kauf erfolgreich! Aktuelle Geschwindigkeit: {:.2f} TC/s",
+        'not_enough_tc': "Du hast nicht genügend TerminalCoins.",
+        'invalid_upgrade_id': "Ungültige Upgrade-ID.",
+        'press_enter_to_continue': "\nDrücke Enter, um fortzufahren...",
+        'boosts_catalog': "Boost-Katalog",
+        'id_cost_multiplier_duration': "ID: {} - Kosten: {} TC - Multiplikator: {}x - Dauer: {}s",
+        'enter_boost_id': "Gib die ID des Boosts ein, den du kaufen möchtest (oder 'exit'): ",
+        'boost_activated': "Boost aktiviert! Schneller minen!",
+        'boost_already_active': "Du hast bereits einen aktiven Boost. Warte, bis er endet.",
+        'invalid_boost_id': "Ungültige Boost-ID.",
+        'codes_available': "Verfügbare Codes",
+        'milestone_codes': "Meilenstein-Codes:",
+        'no_codes_unlocked': "Du hast noch keine Meilenstein-Codes freigeschaltet. Weiterminen!",
+        'enter_code': "\n--- Gib einen Code ein ---\nGib den Code ein, den du verwenden möchtest (oder 'exit'): ",
+        'code_already_used': "Dieser Code wurde bereits verwendet.",
+        'tc1_code_used': "Code TC1 verwendet! 1000 TC wurden zu deiner Geldbörse hinzugefügt.",
+        'code_used_speed_increase': "Code '{}' verwendet. Deine Mining-Geschwindigkeit wurde um {} TC/s erhöht!",
+        'code_used_boost': "Code '{}' verwendet. Du hast einen Boost von {}x aktiviert!",
+        'invalid_or_unlocked_code': "Ungültiger oder nicht freigeschalteter Code.",
+        'music_player': "Musik-Player",
+        'songs_available': "Verfügbare Lieder:",
+        'song_info': "[{}] - '{}' von {} - Kosten: {} TC",
+        'purchase_song_prompt': "\nGib die Nummer des Liedes ein, das du kaufen und abspielen möchtest (oder 'exit'): ",
+        'song_purchased_opening': "Du hast das Lied gekauft! Öffne '{}' in deinem Browser... 🎶",
+        'not_enough_tc_song': "❌ Du hast nicht genügend TerminalCoins, um dieses Lied zu kaufen.",
+        'invalid_option_song': "❌ Ungültige Option.",
+        'programs_store': "Programm-Shop",
+        'store_intro': "Verwende deine TerminalCoins, um andere mit Python entwickelte Programme zu kaufen!",
+        'programs_available': "Verfügbare Programme:",
+        'tv_helper': "'TV Helper': Hilft dir, den besten Fernseher für dich zu finden.",
+        'cost': "Kosten: {} TC",
+        'purchased': "(Gekauft)",
+        'mbc_program': "'MonsterBattleCreator': Ein Kampfspiel, in dem du ein Monster erschaffst und trainierst.",
+        'bitcoin_monitor': "'BitcoinMonitor': Zeigt den Live-Wert von Bitcoin an.",
+        'buy_or_run_program': "\nGib die Nummer des Programms ein, das du kaufen oder ausführen möchtest (oder 'exit'): ",
+        'purchase_successful_program': "Kauf erfolgreich! Du kannst jetzt das Programm '{}' verwenden.",
+        'not_enough_tc_program': "Du hast nicht genügend TerminalCoins, um dieses Programm zu kaufen.",
+        'program_already_active': "Das Programm ist bereits aktiv und wird auf dem Hauptbildschirm angezeigt.",
+        'stickers_store': "Sticker-Shop",
+        'stickers_intro': "Kaufe und sammle Sticker mit ASCII-Kunst!",
+        'rickroll_sticker': "'Rickroll': Ein klassischer Streich! Es wird dich zu einem Überraschungsvideo weiterleiten.",
+        'virus_sticker': "'Virus, du bist ein Idiot': Eine Nachricht auf dem Bildschirm... keine Sorge, es ist kein Virus!",
+        'freddy_sticker': "'Freddy Fazbear': Der berühmte Animatronic in deinem Terminal!",
+        'buy_or_use_sticker': "\nGib die Nummer des Stickers ein, den du kaufen oder verwenden möchtest (oder 'exit'): ",
+        'sticker_purchase_successful': "Kauf erfolgreich! Du kannst jetzt den '{}'-Sticker verwenden.",
+        'not_enough_tc_sticker': "Du hast nicht genügend TerminalCoins, um diesen Sticker zu kaufen.",
+        'rickrolled_message': "Du wurdest gerickrollt!",
+        'virus_message_1': "DU WURDEST INFIZIERT! VIRUS.EXE AUF DEINEM SYSTEM ERKANNT",
+        'virus_message_2': "DU BIST EIN IDIOT!",
+        'virus_message_3': "(Aber kein Virus, oder?)",
+        'press_enter_to_continue_virus': "\nDrücke Enter, um fortzufahren...",
+        'freddy_message_1': "Nimm dich vor Freddy in Acht!",
+        'freddy_message_2': "Freddy ist weg! Vorerst...",
+        'language_options': "--- Sprachoptionen ---\nWähle deine Sprache (gib den Code ein):\n- es (Spanisch)\n- en (Englisch)\n- de (Deutsch)",
+        'language_change_successful': "Sprache zu {} geändert.",
+        'invalid_language': "Ungültige Sprache. Kehre zum Hauptmenü zurück."
+    }
+}
 
 # --- Códigos de recompensa por progreso ---
 codes = {
@@ -75,16 +323,17 @@ def save_game():
         "bitcoin_monitor_purchased": bitcoin_monitor_purchased,
         "rickroll_sticker_purchased": rickroll_sticker_purchased,
         "idiot_sticker_purchased": idiot_sticker_purchased,
-        "freddy_sticker_purchased": freddy_sticker_purchased
+        "freddy_sticker_purchased": freddy_sticker_purchased,
+        "current_language": current_language
     }
     with open(SAVE_FILE, 'w') as f:
         json.dump(data, f)
-    print("✅ Partida guardada con éxito.")
+    print(translations[current_language]['game_saved'])
     time.sleep(1)
 
 def load_game():
     """Carga el estado del juego desde un archivo JSON si existe."""
-    global wallet, mining_speed, boost_active, boost_end_time, boost_multiplier, last_update_time, unlocked_codes, used_special_codes, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased, rickroll_sticker_purchased, idiot_sticker_purchased, freddy_sticker_purchased
+    global wallet, mining_speed, boost_active, boost_end_time, boost_multiplier, last_update_time, unlocked_codes, used_special_codes, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased, rickroll_sticker_purchased, idiot_sticker_purchased, freddy_sticker_purchased, current_language
     if os.path.exists(SAVE_FILE):
         with open(SAVE_FILE, 'r') as f:
             data = json.load(f)
@@ -101,16 +350,16 @@ def load_game():
             rickroll_sticker_purchased = data.get("rickroll_sticker_purchased", False)
             idiot_sticker_purchased = data.get("idiot_sticker_purchased", False)
             freddy_sticker_purchased = data.get("freddy_sticker_purchased", False)
+            current_language = data.get("current_language", 'es')
             last_update_time = time.time()
-        print("¡Partida cargada con éxito!")
+        print(translations[current_language]['game_loaded'])
 
 def check_for_new_codes():
     """Verifica si se han desbloqueado nuevos códigos al alcanzar una cantidad de TC."""
     for tc_amount, code_data in codes.items():
         if wallet >= tc_amount and code_data["code"] not in unlocked_codes:
             unlocked_codes.append(code_data["code"])
-            print(f"\n¡🎉 CÓDIGO DESBLOQUEADO! 🎉")
-            print(f"Has alcanzado los {tc_amount} TC. Tu nuevo código es: {code_data['code']}")
+            print(translations[current_language]['code_unlocked'].format(tc_amount, code_data['code']))
             time.sleep(2)
 
 def update_wallet():
@@ -128,7 +377,7 @@ def update_wallet():
     if boost_active and current_time >= boost_end_time:
         boost_active = False
         boost_multiplier = 1
-        print("El boost ha finalizado.")
+        print(translations[current_language]['boost_ended'])
         time.sleep(1)
 
 def get_crypto_price_display():
@@ -160,56 +409,57 @@ def display_terminalcoin_logo():
     print("      |          '-'          |          ")
     print("       \                       /           ")
     print("        `---------------------'            ")
-    print("            T E R M I N A L C O I N        ")
+    print(f"            {translations[current_language]['menu_title'].upper()}        ")
     if bitcoin_monitor_purchased:
         print(f"        {crypto_display}")
     print("---------------------------------------------")
 
 def show_status():
     """Muestra el estado actual del juego."""
-    print("--- ⛏️ TerminalCoin Miner ---")
-    print(f"Monedero: {wallet:.2f} TC")
-    print(f"Velocidad de minado: {mining_speed * boost_multiplier:.2f} TC/s")
+    print(f"--- ⛏️ {translations[current_language]['menu_title']} ---")
+    print(translations[current_language]['wallet'].format(wallet))
+    print(translations[current_language]['mining_speed'].format(mining_speed * boost_multiplier))
     if boost_active:
         time_left = int(boost_end_time - time.time())
-        print(f"BOOST ACTIVO: {boost_multiplier}x - Quedan {time_left} segundos.")
-    print("\nOpciones:")
-    print("1. Comprar mejoras (Upgrades)")
-    print("2. Comprar boosts")
-    print("3. Ver catálogo de programas")
-    print("4. Ver y usar códigos")
-    print("5. Guardar partida")
-    print("6. Reproducir música")
-    print("7. Ver y usar stickers") # NUEVO MENU
-    print("8. Salir")
+        print(translations[current_language]['boost_active'].format(boost_multiplier, time_left))
+    print(f"\n{translations[current_language]['options_menu']}")
+    print(translations[current_language]['buy_upgrades'])
+    print(translations[current_language]['buy_boosts'])
+    print(translations[current_language]['view_programs'])
+    print(translations[current_language]['view_codes'])
+    print(translations[current_language]['save_game'])
+    print(translations[current_language]['play_music'])
+    print(translations[current_language]['view_stickers'])
+    print(translations[current_language]['change_language'])
+    print(translations[current_language]['exit_game'])
 
 def buy_upgrade():
     """Permite comprar mejoras."""
     global wallet, mining_speed
-    print("\n--- Catálogo de Mejoras ---")
+    print(f"\n--- {translations[current_language]['upgrades_catalog']} ---")
     for key, value in upgrades.items():
-        print(f"ID: {key} - Coste: {value['cost']} TC - Aumenta la velocidad en: {value['speed_increase']} TC/s")
+        print(translations[current_language]['id_cost_speed'].format(key, value['cost'], value['speed_increase']))
     
-    choice = input("Introduce el ID de la mejora a comprar (o 'salir'): ")
+    choice = input(translations[current_language]['enter_upgrade_id'])
     if choice in upgrades:
         if wallet >= upgrades[choice]["cost"]:
             wallet -= upgrades[choice]["cost"]
             mining_speed += upgrades[choice]["speed_increase"]
-            print(f"¡Compra exitosa! Velocidad actual: {mining_speed:.2f} TC/s")
+            print(translations[current_language]['purchase_successful_speed'].format(mining_speed))
         else:
-            print("No tienes suficientes TerminalCoins.")
-    elif choice.lower() != 'salir':
-        print("ID de mejora no válido.")
-    input("\nPulsa Enter para continuar...")
+            print(translations[current_language]['not_enough_tc'])
+    elif choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+        print(translations[current_language]['invalid_upgrade_id'])
+    input(translations[current_language]['press_enter_to_continue'])
 
 def buy_boost():
     """Permite comprar boosts momentáneos."""
     global wallet, boost_active, boost_end_time, boost_multiplier
-    print("\n--- Catálogo de Boosts ---")
+    print(f"\n--- {translations[current_language]['boosts_catalog']} ---")
     for key, value in boosts.items():
-        print(f"ID: {key} - Coste: {value['cost']} TC - Multiplicador: {value['multiplier']}x - Duración: {value['duration']}s")
+        print(translations[current_language]['id_cost_multiplier_duration'].format(key, value['cost'], value['multiplier'], value['duration']))
     
-    choice = input("Introduce el ID del boost a comprar (o 'salir'): ")
+    choice = input(translations[current_language]['enter_boost_id'])
     if choice in boosts:
         if not boost_active:
             if wallet >= boosts[choice]["cost"]:
@@ -217,53 +467,50 @@ def buy_boost():
                 boost_multiplier = boosts[choice]["multiplier"]
                 boost_end_time = time.time() + boosts[choice]["duration"]
                 boost_active = True
-                print("¡Boost activado! ¡A minar más rápido!")
+                print(translations[current_language]['boost_activated'])
             else:
-                print("No tienes suficientes TerminalCoins.")
+                print(translations[current_language]['not_enough_tc'])
         else:
-            print("Ya tienes un boost activo. Espera a que termine.")
-    elif choice.lower() != 'salir':
-        print("ID de boost no válido.")
-    input("\nPulsa Enter para continuar...")
+            print(translations[current_language]['boost_already_active'])
+    elif choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+        print(translations[current_language]['invalid_boost_id'])
+    input(translations[current_language]['press_enter_to_continue'])
 
 def show_programs_store():
     """Simula una tienda de programas."""
     global wallet, tv_helper_purchased, mbc_purchased, bitcoin_monitor_purchased
-    print("\n--- Tienda de Programas ---")
-    print("¡Utiliza tus TerminalCoins para comprar otros programas desarrollados con Python!")
-    print("\nProgramas disponibles:")
+    print(f"\n--- {translations[current_language]['programs_store']} ---")
+    print(translations[current_language]['store_intro'])
+    print(f"\n{translations[current_language]['programs_available']}")
     
-    # Programa TV Helper
     if not tv_helper_purchased:
-        print("1. 'TV Helper': Te ayuda a encontrar la mejor televisión para ti.")
-        print(f"   Costo: 500 TC")
+        print(f"1. {translations[current_language]['tv_helper']}")
+        print(f"   {translations[current_language]['cost'].format(500)}")
     else:
-        print("1. 'TV Helper' (Comprado)")
+        print(f"1. {translations[current_language]['tv_helper']} {translations[current_language]['purchased']}")
         
-    # Nuevo programa MonsterBattleCreator
     if not mbc_purchased:
-        print("2. 'MonsterBattleCreator': Un juego de lucha donde creas y entrenas un monstruo.")
-        print(f"   Costo: 3000 TC")
+        print(f"2. {translations[current_language]['mbc_program']}")
+        print(f"   {translations[current_language]['cost'].format(3000)}")
     else:
-        print("2. 'MonsterBattleCreator' (Comprado)")
+        print(f"2. {translations[current_language]['mbc_program']} {translations[current_language]['purchased']}")
         
-    # Nuevo programa BitcoinMonitor
     if not bitcoin_monitor_purchased:
-        print("3. 'BitcoinMonitor': Muestra el valor en vivo de Bitcoin.")
-        print(f"   Costo: 1000 TC")
+        print(f"3. {translations[current_language]['bitcoin_monitor']}")
+        print(f"   {translations[current_language]['cost'].format(1000)}")
     else:
-        print("3. 'BitcoinMonitor' (Comprado)")
+        print(f"3. {translations[current_language]['bitcoin_monitor']} {translations[current_language]['purchased']}")
         
-    choice = input("\nIntroduce el número del programa que quieres comprar o ejecutar (o 'salir'): ")
+    choice = input(translations[current_language]['buy_or_run_program'])
     
     if choice == '1':
         if not tv_helper_purchased:
             if wallet >= 500:
                 wallet -= 500
                 tv_helper_purchased = True
-                print("¡Compra exitosa! Ahora puedes usar el programa 'TV Helper'.")
+                print(translations[current_language]['purchase_successful_program'].format('TV Helper'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este programa.")
+                print(translations[current_language]['not_enough_tc_program'])
         else:
             run_tv_helper()
             
@@ -272,9 +519,9 @@ def show_programs_store():
             if wallet >= 3000:
                 wallet -= 3000
                 mbc_purchased = True
-                print("¡Compra exitosa! Ahora puedes usar el programa 'MonsterBattleCreator'.")
+                print(translations[current_language]['purchase_successful_program'].format('MonsterBattleCreator'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este programa.")
+                print(translations[current_language]['not_enough_tc_program'])
         else:
             run_monster_battle_creator()
             
@@ -283,43 +530,40 @@ def show_programs_store():
             if wallet >= 1000:
                 wallet -= 1000
                 bitcoin_monitor_purchased = True
-                print("¡Compra exitosa! Ahora puedes ver el valor del Bitcoin en la pantalla principal.")
+                print(translations[current_language]['purchase_successful_program'].format('BitcoinMonitor'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este programa.")
+                print(translations[current_language]['not_enough_tc_program'])
         else:
-            print("El programa ya está activo y se muestra en la pantalla principal.")
+            print(translations[current_language]['program_already_active'])
 
-    elif choice.lower() != 'salir':
-        print("Opción no válida.")
+    elif choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+        print(translations[current_language]['invalid_option'])
     
-    input("\nPulsa Enter para volver al menú principal...")
+    input(translations[current_language]['press_enter_to_continue'])
 
 def manage_codes():
     """Permite al usuario ver y usar los códigos."""
     global mining_speed, boost_active, boost_end_time, boost_multiplier, wallet
     
-    print("\n--- Códigos Disponibles ---")
-    print("Códigos por hitos:")
+    print(f"\n--- {translations[current_language]['codes_available']} ---")
+    print(translations[current_language]['milestone_codes'])
     if not unlocked_codes:
-        print("Aún no has desbloqueado ningún código por hito. ¡Sigue minando!")
+        print(translations[current_language]['no_codes_unlocked'])
     else:
         for code in unlocked_codes:
             print(f"- {code}")
             
-    print("\n--- Introduce un Código ---")
-    choice = input("Introduce el código que quieres usar (o 'salir'): ")
+    choice = input(translations[current_language]['enter_code'])
     
-    # Manejar el código especial TC1
     if choice.upper() == "TC1":
         if "TC1" in used_special_codes:
-            print("Este código ya ha sido usado.")
+            print(translations[current_language]['code_already_used'])
         else:
             wallet += 1000
             used_special_codes.append("TC1")
-            print("¡Código TC1 usado! Se han añadido 1000 TC a tu monedero.")
+            print(translations[current_language]['tc1_code_used'])
     
     else:
-        # Manejar los códigos de hito
         found = False
         for tc_amount, code_data in codes.items():
             if code_data["code"] == choice and choice in unlocked_codes:
@@ -327,86 +571,83 @@ def manage_codes():
                 if code_data["reward_type"] == "speed_increase":
                     mining_speed += code_data["value"]
                     unlocked_codes.remove(choice)
-                    print(f"Código '{choice}' usado. ¡Tu velocidad de minado ha aumentado en {code_data['value']} TC/s!")
+                    print(translations[current_language]['code_used_speed_increase'].format(choice, code_data['value']))
                 elif code_data["reward_type"] == "boost":
                     if not boost_active:
                         boost_multiplier = code_data["value"]
                         boost_end_time = time.time() + code_data["duration"]
                         boost_active = True
                         unlocked_codes.remove(choice)
-                        print(f"Código '{choice}' usado. ¡Has activado un boost de {code_data['value']}x!")
+                        print(translations[current_language]['code_used_boost'].format(choice, code_data['value']))
                     else:
-                        print("Ya tienes un boost activo. No puedes usar este código ahora.")
+                        print(translations[current_language]['boost_already_active'])
                 break
         
-        if not found and choice.lower() != 'salir':
-            print("Código no válido o no desbloqueado.")
+        if not found and choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+            print(translations[current_language]['invalid_or_unlocked_code'])
             
-    input("\nPulsa Enter para continuar...")
+    input(translations[current_language]['press_enter_to_continue'])
 
 def play_music():
     """Permite al usuario comprar y reproducir una canción."""
     global wallet
-    print("\n--- Reproductor de Música ---")
-    print("Canciones disponibles:")
+    print(f"\n--- {translations[current_language]['music_player']} ---")
+    print(translations[current_language]['songs_available'])
     for key, song in SONGS_CATALOG.items():
-        print(f"[{key}] - '{song['title']}' de {song['artist']} - Coste: {song['cost']} TC")
+        print(translations[current_language]['song_info'].format(key, song['title'], song['artist'], song['cost']))
         
-    choice = input("\nIntroduce el número de la canción a comprar y reproducir (o 'salir'): ")
+    choice = input(translations[current_language]['purchase_song_prompt'])
     
     if choice in SONGS_CATALOG:
         song_to_play = SONGS_CATALOG[choice]
         if wallet >= song_to_play['cost']:
             wallet -= song_to_play['cost']
-            print(f"¡Has comprado la canción! Abriendo '{song_to_play['title']}' en tu navegador... 🎶")
+            print(translations[current_language]['song_purchased_opening'].format(song_to_play['title']))
             webbrowser.open_new_tab(song_to_play['url'])
             time.sleep(2)
         else:
-            print("❌ No tienes suficientes TerminalCoins para comprar esta canción.")
-    elif choice.lower() != 'salir':
-        print("❌ Opción no válida.")
+            print(translations[current_language]['not_enough_tc_song'])
+    elif choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+        print(translations[current_language]['invalid_option_song'])
     
-    input("\nPulsa Enter para volver al menú principal...")
+    input(translations[current_language]['press_enter_to_continue'])
 
 def show_stickers_store():
     """Muestra y gestiona la compra y uso de stickers."""
     global wallet, rickroll_sticker_purchased, idiot_sticker_purchased, freddy_sticker_purchased
     
-    print("\n--- Tienda de Stickers ---")
-    print("¡Compra y colecciona stickers con arte ASCII!")
-    print("\nStickers disponibles:")
+    print(f"\n--- {translations[current_language]['stickers_store']} ---")
+    print(translations[current_language]['stickers_intro'])
+    print(f"\n{translations[current_language]['stickers_available']}")
     
-    # Sticker Rickroll
     if not rickroll_sticker_purchased:
-        print("1. 'Rickroll': ¡Una broma clásica! Te enviará a un video sorpresa.")
-        print(f"   Costo: 10,000 TC")
+        print(f"1. {translations[current_language]['rickroll_sticker']}")
+        print(f"   {translations[current_language]['cost'].format(10000)}")
     else:
-        print("1. 'Rickroll' (Comprado)")
+        print(f"1. '{translations[current_language]['rickroll_sticker'].split(':')[0]}' {translations[current_language]['purchased']}")
         
-    # Sticker "Eres un idiota"
     if not idiot_sticker_purchased:
-        print("2. 'Virus, eres un idiota': Un mensaje en pantalla... ¡tranquilo, no es un virus!")
-        print(f"   Costo: 20,000 TC")
+        print(f"2. {translations[current_language]['virus_sticker']}")
+        print(f"   {translations[current_language]['cost'].format(20000)}")
     else:
-        print("2. 'Virus, eres un idiota' (Comprado)")
+        print(f"2. '{translations[current_language]['virus_sticker'].split(':')[0]}' {translations[current_language]['purchased']}")
         
-    # Sticker Freddy Fazbear
     if not freddy_sticker_purchased:
-        print("3. 'Freddy Fazbear': ¡El famoso animatrónico en tu terminal!")
-        print(f"   Costo: 30,000 TC")
+        print(f"3. {translations[current_language]['freddy_sticker']}")
+        print(f"   {translations[current_language]['cost'].format(30000)}")
     else:
-        print("3. 'Freddy Fazbear' (Comprado)")
+        print(f"3. '{translations[current_language]['freddy_sticker'].split(':')[0]}' {translations[current_language]['purchased']}")
         
-    choice = input("\nIntroduce el número del sticker que quieres comprar o usar (o 'salir'): ")
+    choice = input(translations[current_language]['buy_or_use_sticker'])
 
     if choice == '1':
         if not rickroll_sticker_purchased:
             if wallet >= 10000:
                 wallet -= 10000
                 rickroll_sticker_purchased = True
-                print("¡Compra exitosa! Ahora puedes usar el sticker 'Rickroll'.")
+                print(translations[current_language]['sticker_purchase_successful'].format('Rickroll'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+                print(translations[current_language]['not_enough_tc_sticker'])
         else:
             run_rickroll()
 
@@ -415,9 +656,9 @@ def show_stickers_store():
             if wallet >= 20000:
                 wallet -= 20000
                 idiot_sticker_purchased = True
-                print("¡Compra exitosa! Ahora puedes usar el sticker 'Virus, eres un idiota'.")
+                print(translations[current_language]['sticker_purchase_successful'].format('Virus, eres un idiota'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+                print(translations[current_language]['not_enough_tc_sticker'])
         else:
             run_idiot_sticker()
 
@@ -426,20 +667,35 @@ def show_stickers_store():
             if wallet >= 30000:
                 wallet -= 30000
                 freddy_sticker_purchased = True
-                print("¡Compra exitosa! Ahora puedes usar el sticker 'Freddy Fazbear'.")
+                print(translations[current_language]['sticker_purchase_successful'].format('Freddy Fazbear'))
             else:
-                print("No tienes suficientes TerminalCoins para comprar este sticker.")
+                print(translations[current_language]['not_enough_tc_sticker'])
         else:
             run_freddy_sticker()
 
-    elif choice.lower() != 'salir':
-        print("Opción no válida.")
+    elif choice.lower() != 'salir' and choice.lower() != 'exit' and choice.lower() != 'beenden':
+        print(translations[current_language]['invalid_option'])
 
-    input("\nPulsa Enter para volver al menú principal...")
+    input(translations[current_language]['press_enter_to_continue'])
+
+def change_language():
+    """Permite al usuario cambiar el idioma del juego."""
+    global current_language
+    print(translations['es']['language_options'])
+    new_lang = input(">>> ").lower()
+    
+    if new_lang in translations:
+        current_language = new_lang
+        print(translations[current_language]['language_change_successful'].format(new_lang.upper()))
+    else:
+        print(translations['es']['invalid_language'])
+    
+    input(translations[current_language]['press_enter_to_continue'])
+
 
 def run_rickroll():
     """Abre un enlace de Rickroll en el navegador."""
-    print("¡Has sido rickrolleado!")
+    print(translations[current_language]['rickrolled_message'])
     webbrowser.open_new_tab("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     time.sleep(2)
     
@@ -447,7 +703,7 @@ def run_idiot_sticker():
     """Muestra un mensaje de 'virus' en ASCII."""
     clear_screen()
     print(Fore.RED + "==========================================================")
-    print("  ¡HAS SIDO INFECTADO! VIRUS.EXE DETECTADO EN TU SISTEMA")
+    print(f"  {translations[current_language]['virus_message_1'].upper().center(58)}")
     print("==========================================================")
     print("          .---.")
     print("         /     \\")
@@ -457,11 +713,11 @@ def run_idiot_sticker():
     print("         \\     /")
     print("          `---'")
     print("==========================================================")
-    print(Fore.RED + "           ¡ERES UN IDIOTA!")
-    print(Fore.YELLOW + "            (Pero no un virus, eh.)")
+    print(Fore.RED + f"           {translations[current_language]['virus_message_2'].upper()}")
+    print(Fore.YELLOW + f"            {translations[current_language]['virus_message_3']}")
     print(Fore.RED + "==========================================================")
     print(Style.RESET_ALL)
-    input("\nPresiona Enter para continuar...")
+    input(translations[current_language]['press_enter_to_continue_virus'])
     
 def run_freddy_sticker():
     """Simula una animación GIF de Freddy Fazbear con arte ASCII."""
@@ -504,10 +760,10 @@ def run_freddy_sticker():
 """
     ]
     
-    print("¡Cuidado con Freddy!")
+    print(translations[current_language]['freddy_message_1'])
     time.sleep(1)
     
-    for _ in range(3): # Repetir la animación 3 veces
+    for _ in range(3):
         for frame in frames:
             clear_screen()
             print(Fore.BLUE + Style.BRIGHT + "   F R E D D Y  F A Z B E A R" + Style.RESET_ALL)
@@ -515,7 +771,7 @@ def run_freddy_sticker():
             time.sleep(0.3)
     
     clear_screen()
-    print("¡Freddy se ha ido! Por ahora...")
+    print(translations[current_language]['freddy_message_2'])
     time.sleep(1)
 
 # --- FUNCIONALIDAD DEL PROGRAMA TV HELPER ---
@@ -1148,7 +1404,7 @@ def run_monster_battle_creator():
             mostrar_sala_trofeos(progreso)
             
         elif opcion == '3':
-            print("Volviendo al menú principal...")
+            print("Saliendo del juego...")
             break
             
         else:
@@ -1165,7 +1421,7 @@ if __name__ == "__main__":
         check_for_new_codes()
         show_status()
         
-        user_input = input("Elige una opción: ")
+        user_input = input(translations[current_language]['choice_prompt'])
         
         if user_input == '1':
             buy_upgrade()
@@ -1182,9 +1438,11 @@ if __name__ == "__main__":
         elif user_input == '7':
             show_stickers_store()
         elif user_input == '8':
+            change_language()
+        elif user_input == '9':
             save_game()
-            print("Saliendo del juego...")
+            print(translations[current_language]['exit_game'])
             break
         else:
-            print("Opción no válida. Inténtalo de nuevo.")
+            print(translations[current_language]['invalid_option'])
             time.sleep(1)
