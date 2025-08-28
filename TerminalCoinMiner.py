@@ -27,7 +27,7 @@ bitcoin_monitor_purchased = False
 rickroll_sticker_purchased = False
 idiot_sticker_purchased = False
 freddy_sticker_purchased = False
-current_language = 'es' # Idioma por defecto
+current_language = 'en' # Idioma por defecto
 
 # --- Diccionario de traducciones ---
 translations = {
@@ -110,7 +110,97 @@ translations = {
         'freddy_message_2': "Freddy se ha ido! Por ahora...",
         'language_options': "--- Opciones de Idioma ---\nElige tu idioma (escribe el código):\n- es (Español)\n- en (Inglés)\n- de (Alemán)",
         'language_change_successful': "Idioma cambiado a {}.",
-        'invalid_language': "Idioma no válido. Volviendo al menú principal."
+        'invalid_language': "Idioma no válido. Volviendo al menú principal.",
+        
+        # Traducciones de TV Helper
+        'tvh_welcome': "--- Bienvenido a 'TV Helper' ---",
+        'tvh_intro': "Este programa te ayudará a encontrar la mejor televisión para ti.",
+        'tvh_prompt_brand_interest': "¿Tienes una marca de televisor que te interese? (sí/no): ",
+        'tvh_prompt_preferred_brand': "¿Cuál marca prefieres? ",
+        'tvh_prompt_size': "¿Qué tamaño de televisor (en pulgadas) buscas? ",
+        'tvh_prompt_resolution': "¿Qué resolución quieres? (720p, 1080p, 4K, 8K): ",
+        'tvh_prompt_budget': "¿Cuál es tu presupuesto máximo en euros? (€): ",
+        'tvh_invalid_response': "❌ Respuesta no válida. Por favor, responde 'sí' o 'no'.",
+        'tvh_invalid_number': "❌ Por favor, ingresa un valor numérico válido.",
+        'tvh_invalid_resolution': "❌ Resolución no válida. Por favor, elige una de la lista.",
+        'tvh_positive_value_required': "❌ Por favor, ingresa un valor positivo.",
+        'tvh_no_results_all_criteria': "\n🤔 No se encontraron resultados con todos los criterios. Ampliando la búsqueda...",
+        'tvh_no_results_res_budget': "\n🤔 No se encontraron resultados con los criterios de resolución y presupuesto. Mostrando las mejores opciones dentro de su presupuesto.",
+        'tvh_recommendation_title': "✨ ¡Tu Televisor Ideal! ✨",
+        'tvh_recommendation_intro': "\nAquí tienes las 3 mejores opciones que se adaptan a tus necesidades:",
+        'tvh_no_results_found': "\nLo sentimos, no pudimos encontrar un televisor que se ajuste a tus criterios. \nTe recomendamos ajustar tu presupuesto o considerar otras opciones.",
+        'tvh_size': "    - **Tamaño**: {} pulgadas",
+        'tvh_resolution': "    - **Resolución**: {}",
+        'tvh_refresh_rate': "    - **Frecuencia**: {} Hz",
+        'tvh_processor': "    - **Procesador de Imagen**: {}",
+        'tvh_price': "    - **Precio**: {:.2f}€",
+        'tvh_return_to_main': "\nPulsa Enter para volver a TerminalCoin...",
+        
+        # Traducciones de Monster Battle Creator
+        'mbc_title_1': "C R E A D O R   Y   T O R N E O   D E   M O N S T R U O S",
+        'mbc_intro_1': "¡Crea a tu monstruo para el torneo! ",
+        'mbc_menu_title': "M E N Ú   P R I N C I P A L",
+        'mbc_option_1': "1. ¡Comenzar un nuevo torneo!",
+        'mbc_option_2': "2. Ver mi Sala de Trofeos",
+        'mbc_option_3': "3. Salir",
+        'mbc_choice_prompt': "\nElige una opción: ",
+        'mbc_invalid_menu_option': "Opción no válida. Por favor, elige 1, 2 o 3.",
+        'mbc_intro_2': "--- CREA A TU MONSTRUO PARA EL TORNEO ---",
+        'mbc_select_head': "Selecciona una cabeza para tu monstruo",
+        'mbc_select_body': "Ahora, selecciona un cuerpo",
+        'mbc_select_arms': "Y por último, elige unos brazos",
+        'mbc_select_legs': "Finalmente, elige unas piernas",
+        'mbc_prompt_name': "\n¡Ponle un nombre a tu campeón!: ",
+        'mbc_created_title': "¡T U   M O N S T R U O   H A   S I D O   C R E A D O !",
+        'mbc_char_title': "--- Características de tu campeón ---",
+        'mbc_head_char': "CABEZA: {}",
+        'mbc_body_char': "CUERPO: {}",
+        'mbc_arms_char': "BRAZOS: {}",
+        'mbc_legs_char': "PIERNAS: {}",
+        'mbc_press_to_start': "\nPresiona Enter para comenzar el torneo...",
+        'mbc_tutorial_title': "=== TUTORIAL DE COMBATE ===",
+        'mbc_tutorial_intro': "¡Bienvenido al Torneo de Monstruos! Para ganar, deberás dominar las combinaciones de teclas.",
+        'mbc_tutorial_phases': "La batalla se divide en dos fases por turno:",
+        'mbc_tutorial_defense': "1. FASE DE DEFENSA:",
+        'mbc_tutorial_defense_desc': "El rival te atacará. Debes presionar una combinación de 2 teclas (ej: 'a' + 's') para defenderte. Si lo logras, te defenderás. Si fallas, recibirás daño.",
+        'mbc_tutorial_attack': "2. FASE DE ATAQUE:",
+        'mbc_tutorial_attack_desc': "Es tu turno. Debes presionar una nueva combinación de 2 teclas para atacar. Si lo consigues, dañarás al rival. Si no, perderás el turno.",
+        'mbc_tutorial_important': "¡Importante!:",
+        'mbc_tutorial_important_desc': "El tiempo para reaccionar se reduce en cada ronda. En la batalla final, deberás ser extremadamente rápido para sobrevivir.",
+        'mbc_tutorial_continue': "\nPresiona Enter para continuar y comenzar la primera batalla...",
+        'mbc_battle_start': "=== ¡COMIENZA LA BATALLA! ===",
+        'mbc_press_to_continue': "Presiona Enter para continuar...",
+        'mbc_phase_defense': "--- FASE DE DEFENSA ---",
+        'mbc_prompt_defense': "¡EL RIVAL ATACA! Rápido, presiona la combinación '{} + {}' para defenderte. Tienes {:.2f} segundos para reaccionar...",
+        'mbc_defense_success': "\n¡Combinación exitosa! Has creado una barrera y te has defendido del ataque del rival.",
+        'mbc_defense_fail': "\n¡Combinación fallida! {} te golpea. Recibes {} de daño.",
+        'mbc_boss_attack_strong': "¡El ataque del jefe es devastador!",
+        'mbc_phase_attack': "--- FASE DE ATAQUE ---",
+        'mbc_prompt_attack': "¡ES TU TURNO! Presiona la combinación '{} + {}' para atacar. Tienes {:.2f} segundos para reaccionar...",
+        'mbc_attack_success': "\n¡Combinación exitosa! ¡Has atacado a {} y le has hecho {} de daño!",
+        'mbc_attack_fail': "\n¡Combinación fallida! Pierdes tu turno de ataque.",
+        'mbc_win_battle': "\n¡Has derrotado a {}! ¡Felicidades!",
+        'mbc_win_final_boss': "\n¡¡¡HAS DERROTADO AL JEFE FINAL Y GANADO EL TORNEO!!!",
+        'mbc_lose_battle': "\n¡Has sido derrotado por {}! ¡El torneo ha terminado!",
+        'mbc_win_trophy_veteran': "\n¡Has desbloqueado el Trofeo de Veterano!",
+        'mbc_win_trophy_legend': "\n¡Has desbloqueado el Trofeo de Leyenda! ¡Eres un maestro!",
+        'mbc_final_victory': "¡VICTORIA! ¡ERES EL CAMPEÓN DEL TORNEO!",
+        'mbc_final_victory_desc': "\n¡Tu monstruo ha vencido a todos los rivales y al JEFE FINAL!",
+        'mbc_play_again': "\n¿Quieres jugar de nuevo? (Presiona Enter para reiniciar)",
+        'mbc_trophy_room_title': "=== SALA DE TROFEOS ===",
+        'mbc_trophies_won_count': "Victorias en el Torneo: {}",
+        'mbc_trophy_legend_title': "--- Trofeo de Leyenda ---",
+        'mbc_trophy_legend_desc': "¡Has ganado 10 torneos! ¡Eres una leyenda del combate!",
+        'mbc_trophy_veteran_title': "--- Trofeo de Veterano ---",
+        'mbc_trophy_veteran_desc': "¡Has ganado 5 torneos! Un verdadero veterano.",
+        'mbc_trophy_champion_title': "--- Trofeo de Campeón ---",
+        'mbc_trophy_champion_desc': "¡Has derrotado al Jefe Final y ganado un torneo!",
+        'mbc_no_trophies': "Aún no tienes trofeos. ¡Gana el torneo para conseguir el primero!",
+        'mbc_return_to_menu': "Presiona Enter para volver al menú principal...",
+        'mbc_exit_game': "Saliendo del juego...",
+        'mbc_health': "VIDA:",
+        'mbc_energy': "ENERGÍA:",
+        'mbc_vs': "VS",
     },
     'en': {
         'menu_title': "TerminalCoin Miner",
@@ -191,7 +281,97 @@ translations = {
         'freddy_message_2': "Freddy is gone! For now...",
         'language_options': "--- Language Options ---\nChoose your language (enter the code):\n- es (Spanish)\n- en (English)\n- de (German)",
         'language_change_successful': "Language changed to {}.",
-        'invalid_language': "Invalid language. Returning to the main menu."
+        'invalid_language': "Invalid language. Returning to the main menu.",
+        
+        # TV Helper translations
+        'tvh_welcome': "--- Welcome to 'TV Helper' ---",
+        'tvh_intro': "This program will help you find the best TV for you.",
+        'tvh_prompt_brand_interest': "Do you have a TV brand you're interested in? (yes/no): ",
+        'tvh_prompt_preferred_brand': "Which brand do you prefer? ",
+        'tvh_prompt_size': "What size TV (in inches) are you looking for? ",
+        'tvh_prompt_resolution': "What resolution do you want? (720p, 1080p, 4K, 8K): ",
+        'tvh_prompt_budget': "What is your maximum budget in Euros? (€): ",
+        'tvh_invalid_response': "❌ Invalid response. Please answer 'yes' or 'no'.",
+        'tvh_invalid_number': "❌ Please enter a valid number.",
+        'tvh_invalid_resolution': "❌ Invalid resolution. Please choose from the list.",
+        'tvh_positive_value_required': "❌ Please enter a positive value.",
+        'tvh_no_results_all_criteria': "\n🤔 No results found with all criteria. Broadening the search...",
+        'tvh_no_results_res_budget': "\n🤔 No results found with resolution and budget criteria. Displaying the best options within your budget.",
+        'tvh_recommendation_title': "✨ Your Ideal TV! ✨",
+        'tvh_recommendation_intro': "\nHere are the top 3 options that fit your needs:",
+        'tvh_no_results_found': "\nSorry, we couldn't find a TV that fits your criteria. \nWe recommend adjusting your budget or considering other options.",
+        'tvh_size': "    - **Size**: {} inches",
+        'tvh_resolution': "    - **Resolution**: {}",
+        'tvh_refresh_rate': "    - **Refresh Rate**: {} Hz",
+        'tvh_processor': "    - **Image Processor**: {}",
+        'tvh_price': "    - **Price**: {:.2f}€",
+        'tvh_return_to_main': "\nPress Enter to return to TerminalCoin...",
+
+        # Monster Battle Creator translations
+        'mbc_title_1': "M O N S T E R   C R E A T O R   A N D   T O U R N A M E N T",
+        'mbc_intro_1': "Create your monster for the tournament! ",
+        'mbc_menu_title': "M A I N   M E N U",
+        'mbc_option_1': "1. Start a new tournament!",
+        'mbc_option_2': "2. View my Trophy Room",
+        'mbc_option_3': "3. Exit",
+        'mbc_choice_prompt': "\nChoose an option: ",
+        'mbc_invalid_menu_option': "Invalid option. Please choose 1, 2, or 3.",
+        'mbc_intro_2': "--- CREATE YOUR MONSTER FOR THE TOURNAMENT ---",
+        'mbc_select_head': "Select a head for your monster",
+        'mbc_select_body': "Now, select a body",
+        'mbc_select_arms': "And finally, choose a pair of arms",
+        'mbc_select_legs': "Lastly, choose a pair of legs",
+        'mbc_prompt_name': "\nGive your champion a name!: ",
+        'mbc_created_title': "Y O U R   M O N S T E R   H A S   B E E N   C R E A T E D !",
+        'mbc_char_title': "--- Characteristics of your champion ---",
+        'mbc_head_char': "HEAD: {}",
+        'mbc_body_char': "BODY: {}",
+        'mbc_arms_char': "ARMS: {}",
+        'mbc_legs_char': "LEGS: {}",
+        'mbc_press_to_start': "\nPress Enter to start the tournament...",
+        'mbc_tutorial_title': "=== BATTLE TUTORIAL ===",
+        'mbc_tutorial_intro': "Welcome to the Monster Tournament! To win, you must master the key combinations.",
+        'mbc_tutorial_phases': "The battle is divided into two phases per turn:",
+        'mbc_tutorial_defense': "1. DEFENSE PHASE:",
+        'mbc_tutorial_defense_desc': "The opponent will attack you. You must press a 2-key combination (e.g., 'a' + 's') to defend yourself. If you succeed, you will defend. If you fail, you will take damage.",
+        'mbc_tutorial_attack': "2. ATTACK PHASE:",
+        'mbc_tutorial_attack_desc': "It's your turn. You must press a new 2-key combination to attack. If you succeed, you will damage the opponent. If not, you will lose your turn.",
+        'mbc_tutorial_important': "Important!:",
+        'mbc_tutorial_important_desc': "The reaction time decreases with each round. In the final battle, you must be extremely fast to survive.",
+        'mbc_tutorial_continue': "\nPress Enter to continue and start the first battle...",
+        'mbc_battle_start': "=== BATTLE BEGINS! ===",
+        'mbc_press_to_continue': "Press Enter to continue...",
+        'mbc_phase_defense': "--- DEFENSE PHASE ---",
+        'mbc_prompt_defense': "THE OPPONENT ATTACKS! Quick, press the combination '{} + {}' to defend yourself. You have {:.2f} seconds to react...",
+        'mbc_defense_success': "\nCombination successful! You have created a barrier and defended yourself from the opponent's attack.",
+        'mbc_defense_fail': "\nCombination failed! {} hits you. You take {} damage.",
+        'mbc_boss_attack_strong': "The boss's attack is devastating!",
+        'mbc_phase_attack': "--- ATTACK PHASE ---",
+        'mbc_prompt_attack': "IT'S YOUR TURN! Press the combination '{} + {}' to attack. You have {:.2f} seconds to react...",
+        'mbc_attack_success': "\nCombination successful! You have attacked {} and dealt {} damage!",
+        'mbc_attack_fail': "\nCombination failed! You lose your attack turn.",
+        'mbc_win_battle': "\nYou have defeated {}! Congratulations!",
+        'mbc_win_final_boss': "\nYOU HAVE DEFEATED THE FINAL BOSS AND WON THE TOURNAMENT!!!",
+        'mbc_lose_battle': "\nYou have been defeated by {}! The tournament is over!",
+        'mbc_win_trophy_veteran': "\nYou have unlocked the Veteran Trophy!",
+        'mbc_win_trophy_legend': "\nYou have unlocked the Legend Trophy! You are a master!",
+        'mbc_final_victory': "VICTORY! YOU ARE THE TOURNAMENT CHAMPION!",
+        'mbc_final_victory_desc': "\nYour monster has defeated all rivals and the FINAL BOSS!",
+        'mbc_play_again': "\nDo you want to play again? (Press Enter to restart)",
+        'mbc_trophy_room_title': "=== TROPHY ROOM ===",
+        'mbc_trophies_won_count': "Tournament Victories: {}",
+        'mbc_trophy_legend_title': "--- Legend Trophy ---",
+        'mbc_trophy_legend_desc': "You have won 10 tournaments! You are a combat legend!",
+        'mbc_trophy_veteran_title': "--- Veteran Trophy ---",
+        'mbc_trophy_veteran_desc': "You have won 5 tournaments! A true veteran.",
+        'mbc_trophy_champion_title': "--- Champion Trophy ---",
+        'mbc_trophy_champion_desc': "You have defeated the Final Boss and won a tournament!",
+        'mbc_no_trophies': "You don't have any trophies yet. Win the tournament to get your first one!",
+        'mbc_return_to_menu': "Press Enter to return to the main menu...",
+        'mbc_exit_game': "Exiting the game...",
+        'mbc_health': "HEALTH:",
+        'mbc_energy': "ENERGY:",
+        'mbc_vs': "VS",
     },
     'de': {
         'menu_title': "TerminalCoin-Miner",
@@ -272,7 +452,97 @@ translations = {
         'freddy_message_2': "Freddy ist weg! Vorerst...",
         'language_options': "--- Sprachoptionen ---\nWähle deine Sprache (gib den Code ein):\n- es (Spanisch)\n- en (Englisch)\n- de (Deutsch)",
         'language_change_successful': "Sprache zu {} geändert.",
-        'invalid_language': "Ungültige Sprache. Kehre zum Hauptmenü zurück."
+        'invalid_language': "Ungültige Sprache. Kehre zum Hauptmenü zurück.",
+
+        # TV Helper translations
+        'tvh_welcome': "--- Willkommen bei 'TV Helper' ---",
+        'tvh_intro': "Dieses Programm hilft dir, den besten Fernseher für dich zu finden.",
+        'tvh_prompt_brand_interest': "Bist du an einer bestimmten TV-Marke interessiert? (ja/nein): ",
+        'tvh_prompt_preferred_brand': "Welche Marke bevorzugst du? ",
+        'tvh_prompt_size': "Welche TV-Größe (in Zoll) suchst du? ",
+        'tvh_prompt_resolution': "Welche Auflösung möchtest du? (720p, 1080p, 4K, 8K): ",
+        'tvh_prompt_budget': "Was ist dein maximales Budget in Euro? (€): ",
+        'tvh_invalid_response': "❌ Ungültige Antwort. Bitte antworte 'ja' oder 'nein'.",
+        'tvh_invalid_number': "❌ Bitte gib eine gültige Zahl ein.",
+        'tvh_invalid_resolution': "❌ Ungültige Auflösung. Bitte wähle aus der Liste.",
+        'tvh_positive_value_required': "❌ Bitte gib einen positiven Wert ein.",
+        'tvh_no_results_all_criteria': "\n🤔 Keine Ergebnisse mit allen Kriterien gefunden. Suche wird erweitert...",
+        'tvh_no_results_res_budget': "\n🤔 Keine Ergebnisse mit den Kriterien Auflösung und Budget gefunden. Es werden die besten Optionen innerhalb deines Budgets angezeigt.",
+        'tvh_recommendation_title': "✨ Dein Idealer Fernseher! ✨",
+        'tvh_recommendation_intro': "\nHier sind die 3 besten Optionen, die zu deinen Bedürfnissen passen:",
+        'tvh_no_results_found': "\nLeider konnten wir keinen Fernseher finden, der deinen Kriterien entspricht. \nWir empfehlen, dein Budget anzupassen oder andere Optionen in Betracht zu ziehen.",
+        'tvh_size': "    - **Größe**: {} Zoll",
+        'tvh_resolution': "    - **Auflösung**: {}",
+        'tvh_refresh_rate': "    - **Bildwiederholfrequenz**: {} Hz",
+        'tvh_processor': "    - **Bildprozessor**: {}",
+        'tvh_price': "    - **Preis**: {:.2f}€",
+        'tvh_return_to_main': "\nDrücke Enter, um zu TerminalCoin zurückzukehren...",
+
+        # Monster Battle Creator translations
+        'mbc_title_1': "M O N S T E R - E R S T E L L E R   U N D   T U R N I E R",
+        'mbc_intro_1': "Erstelle dein Monster für das Turnier! ",
+        'mbc_menu_title': "H A U P T M E N Ü",
+        'mbc_option_1': "1. Ein neues Turnier starten!",
+        'mbc_option_2': "2. Meine Trophäenkammer ansehen",
+        'mbc_option_3': "3. Beenden",
+        'mbc_choice_prompt': "\nWähle eine Option: ",
+        'mbc_invalid_menu_option': "Ungültige Option. Bitte wähle 1, 2 oder 3.",
+        'mbc_intro_2': "--- ERSTELLE DEIN MONSTER FÜR DAS TURNIER ---",
+        'mbc_select_head': "Wähle einen Kopf für dein Monster",
+        'mbc_select_body': "Jetzt, wähle einen Körper",
+        'mbc_select_arms': "Und zum Schluss, wähle ein Paar Arme",
+        'mbc_select_legs': "Zuletzt, wähle ein Paar Beine",
+        'mbc_prompt_name': "\nGib deinem Champion einen Namen!: ",
+        'mbc_created_title': "D E I N   M O N S T E R   W U R D E   E R S T E L L T !",
+        'mbc_char_title': "--- Eigenschaften deines Champions ---",
+        'mbc_head_char': "KOPF: {}",
+        'mbc_body_char': "KÖRPER: {}",
+        'mbc_arms_char': "ARME: {}",
+        'mbc_legs_char': "BEINE: {}",
+        'mbc_press_to_start': "\nDrücke Enter, um das Turnier zu starten...",
+        'mbc_tutorial_title': "=== KAMPF-TUTORIAL ===",
+        'mbc_tutorial_intro': "Willkommen beim Monster-Turnier! Um zu gewinnen, musst du die Tastenkombinationen meistern.",
+        'mbc_tutorial_phases': "Der Kampf ist pro Zug in zwei Phasen unterteilt:",
+        'mbc_tutorial_defense': "1. VERTEIDIGUNGSPHASE:",
+        'mbc_tutorial_defense_desc': "Der Gegner wird dich angreifen. Du musst eine 2-Tasten-Kombination (z.B. 'a' + 's') drücken, um dich zu verteidigen. Wenn du Erfolg hast, verteidigst du dich. Wenn du scheiterst, nimmst du Schaden.",
+        'mbc_tutorial_attack': "2. ANGRIFFSPHASE:",
+        'mbc_tutorial_attack_desc': "Du bist am Zug. Du musst eine neue 2-Tasten-Kombination drücken, um anzugreifen. Wenn du Erfolg hast, fügst du dem Gegner Schaden zu. Wenn nicht, verlierst du deinen Zug.",
+        'mbc_tutorial_important': "Wichtig!:",
+        'mbc_tutorial_important_desc': "Die Reaktionszeit wird mit jeder Runde kürzer. Im Endkampf musst du extrem schnell sein, um zu überleben.",
+        'mbc_tutorial_continue': "\nDrücke Enter, um fortzufahren und den ersten Kampf zu beginnen...",
+        'mbc_battle_start': "=== KAMPF BEGINNT! ===",
+        'mbc_press_to_continue': "Drücke Enter, um fortzufahren...",
+        'mbc_phase_defense': "--- VERTEIDIGUNGSPHASE ---",
+        'mbc_prompt_defense': "DER GEGNER GREIFT AN! Schnell, drücke die Kombination '{} + {}', um dich zu verteidigen. Du hast {:.2f} Sekunden zum Reagieren...",
+        'mbc_defense_success': "\nKombination erfolgreich! Du hast eine Barriere erschaffen und dich vor dem Angriff des Gegners verteidigt.",
+        'mbc_defense_fail': "\nKombination fehlgeschlagen! {} trifft dich. Du erleidest {} Schaden.",
+        'mbc_boss_attack_strong': "Der Angriff des Bosses ist verheerend!",
+        'mbc_phase_attack': "--- ANGRIFFSPHASE ---",
+        'mbc_prompt_attack': "DU BIST AM ZUG! Drücke die Kombination '{} + {}', um anzugreifen. Du hast {:.2f} Sekunden zum Reagieren...",
+        'mbc_attack_success': "\nKombination erfolgreich! Du hast {} angegriffen und {} Schaden verursacht!",
+        'mbc_attack_fail': "\nKombination fehlgeschlagen! Du verlierst deinen Angriffs-Zug.",
+        'mbc_win_battle': "\nDu hast {} besiegt! Herzlichen Glückwunsch!",
+        'mbc_win_final_boss': "\nDU HAST DEN ENDBOSS BESIEGT UND DAS TURNIER GEWONNEN!!!",
+        'mbc_lose_battle': "\nDu wurdest von {} besiegt! Das Turnier ist vorbei!",
+        'mbc_win_trophy_veteran': "\nDu hast die Veteranen-Trophäe freigeschaltet!",
+        'mbc_win_trophy_legend': "\nDu hast die Legenden-Trophäe freigeschaltet! Du bist ein Meister!",
+        'mbc_final_victory': "SIEG! DU BIST DER TURNIER-CHAMPION!",
+        'mbc_final_victory_desc': "\nDein Monster hat alle Rivalen und den ENDBOSS besiegt!",
+        'mbc_play_again': "\nMöchtest du noch einmal spielen? (Drücke Enter, um neu zu starten)",
+        'mbc_trophy_room_title': "=== TROPHÄENKAMMER ===",
+        'mbc_trophies_won_count': "Turniersiege: {}",
+        'mbc_trophy_legend_title': "--- Legenden-Trophäe ---",
+        'mbc_trophy_legend_desc': "Du hast 10 Turniere gewonnen! Du bist eine Kampflegende!",
+        'mbc_trophy_veteran_title': "--- Veteranen-Trophäe ---",
+        'mbc_trophy_veteran_desc': "Du hast 5 Turniere gewonnen! Ein wahrer Veteran.",
+        'mbc_trophy_champion_title': "--- Champion-Trophäe ---",
+        'mbc_trophy_champion_desc': "Du hast den Endboss besiegt und ein Turnier gewonnen!",
+        'mbc_no_trophies': "Du hast noch keine Trophäen. Gewinne das Turnier, um deine erste zu bekommen!",
+        'mbc_return_to_menu': "Drücke Enter, um zum Hauptmenü zurückzukehren...",
+        'mbc_exit_game': "Spiel wird beendet...",
+        'mbc_health': "LEBEN:",
+        'mbc_energy': "ENERGIE:",
+        'mbc_vs': "GEGEN",
     }
 }
 
@@ -350,7 +620,7 @@ def load_game():
             rickroll_sticker_purchased = data.get("rickroll_sticker_purchased", False)
             idiot_sticker_purchased = data.get("idiot_sticker_purchased", False)
             freddy_sticker_purchased = data.get("freddy_sticker_purchased", False)
-            current_language = data.get("current_language", 'es')
+            current_language = data.get("current_language", 'en')
             last_update_time = time.time()
         print(translations[current_language]['game_loaded'])
 
@@ -777,8 +1047,8 @@ def run_freddy_sticker():
 # --- FUNCIONALIDAD DEL PROGRAMA TV HELPER ---
 def run_tv_helper():
     clear_screen()
-    print("--- Bienvenido a 'TV Helper' ---")
-    print("Este programa te ayudará a encontrar la mejor televisión para ti.")
+    print(translations[current_language]['tvh_welcome'])
+    print(translations[current_language]['tvh_intro'])
     time.sleep(2)
     
     class Televisor:
@@ -794,44 +1064,44 @@ def run_tv_helper():
 
     def obtener_datos_usuario():
         """Función para obtener las preferencias del usuario de forma interactiva."""
-        print("--- ¡Bienvenido al Buscador de Televisores! ---")
+        print(f"--- {translations[current_language]['tvh_welcome'].replace('---', '')} ---")
         
         while True:
-            respuesta_marca = input("¿Tienes una marca de televisor que te interese? (sí/no): ").lower()
-            if respuesta_marca in ["si", "sí"]:
-                marca_preferida = input("¿Cuál marca prefieres? ").capitalize()
+            respuesta_marca = input(translations[current_language]['tvh_prompt_brand_interest']).lower()
+            if respuesta_marca in [translations['es']['tvh_prompt_brand_interest'].split('(')[1].strip().split('/')[0], translations['es']['tvh_prompt_brand_interest'].split('(')[1].strip().split('/')[0].replace('í','i')]:
+                marca_preferida = input(translations[current_language]['tvh_prompt_preferred_brand']).capitalize()
                 break
-            elif respuesta_marca in ["no", "n"]:
+            elif respuesta_marca in [translations['es']['tvh_prompt_brand_interest'].split('(')[1].strip().split('/')[1].replace(')','')]:
                 marca_preferida = None
                 break
             else:
-                print("❌ Respuesta no válida. Por favor, responde 'sí' o 'no'.")
+                print(translations[current_language]['tvh_invalid_response'])
 
         while True:
             try:
-                tamano_deseado = int(input("¿Qué tamaño de televisor (en pulgadas) buscas? "))
+                tamano_deseado = int(input(translations[current_language]['tvh_prompt_size']))
                 break
             except ValueError:
-                print("❌ Por favor, ingresa un valor numérico válido.")
+                print(translations[current_language]['tvh_invalid_number'])
 
         resoluciones_disponibles = ["720p", "1080p", "4K", "8K"]
         while True:
-            resolucion_deseada = input("¿Qué resolución quieres? (720p, 1080p, 4K, 8K): ").upper()
+            resolucion_deseada = input(translations[current_language]['tvh_prompt_resolution']).upper()
             if resolucion_deseada.lower() in [r.lower() for r in resoluciones_disponibles]:
                 resolucion_deseada = resolucion_deseada.lower().replace("p", "P")
                 break
             else:
-                print("❌ Resolución no válida. Por favor, elige una de la lista.")
+                print(translations[current_language]['tvh_invalid_resolution'])
 
         while True:
             try:
-                presupuesto_maximo = float(input("¿Cuál es tu presupuesto máximo en euros? (€): "))
+                presupuesto_maximo = float(input(translations[current_language]['tvh_prompt_budget']))
                 if presupuesto_maximo <= 0:
-                    print("❌ Por favor, ingresa un valor positivo.")
+                    print(translations[current_language]['tvh_positive_value_required'])
                     continue
                 break
             except ValueError:
-                print("❌ Por favor, ingresa un valor numérico válido.")
+                print(translations[current_language]['tvh_invalid_number'])
         
         return marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo
 
@@ -883,7 +1153,7 @@ def run_tv_helper():
             opciones_filtradas.append(tv)
         
         if not opciones_filtradas:
-            print("\n🤔 No se encontraron resultados con todos los criterios. Ampliando la búsqueda...")
+            print(translations[current_language]['tvh_no_results_all_criteria'])
             opciones_filtradas = []
             for tv in db_televisores:
                 if tv.precio > presupuesto_maximo:
@@ -893,7 +1163,7 @@ def run_tv_helper():
                 opciones_filtradas.append(tv)
 
         if not opciones_filtradas:
-            print("\n🤔 No se encontraron resultados con los criterios de resolución y presupuesto. Mostrando las mejores opciones dentro de su presupuesto.")
+            print(translations[current_language]['tvh_no_results_res_budget'])
             opciones_filtradas = []
             for tv in db_televisores:
                 if tv.precio > presupuesto_maximo:
@@ -932,20 +1202,20 @@ def run_tv_helper():
     def mostrar_recomendacion(opciones_filtradas):
         """Muestra los 3 mejores televisores encontrados."""
         print("\n" + "="*50)
-        print("          ✨ ¡Tu Televisor Ideal! ✨")
+        print(f"          {translations[current_language]['tvh_recommendation_title']}")
         print("="*50)
         
         if not opciones_filtradas:
-            print("\nLo sentimos, no pudimos encontrar un televisor que se ajuste a tus criterios. \nTe recomendamos ajustar tu presupuesto o considerar otras opciones.")
+            print(translations[current_language]['tvh_no_results_found'])
         else:
-            print("\nAquí tienes las 3 mejores opciones que se adaptan a tus necesidades:")
+            print(translations[current_language]['tvh_recommendation_intro'])
             for i, (score, tv) in enumerate(opciones_filtradas[:3]):
                 print(f"\n{i+1}. {tv.marca} {tv.modelo}:")
-                print(f"    - **Tamaño**: {tv.tamano} pulgadas")
-                print(f"    - **Resolución**: {tv.resolucion}")
-                print(f"    - **Frecuencia**: {tv.frecuencia} Hz")
-                print(f"    - **Procesador de Imagen**: {tv.procesador}")
-                print(f"    - **Precio**: {tv.precio:.2f}€")
+                print(translations[current_language]['tvh_size'].format(tv.tamano))
+                print(translations[current_language]['tvh_resolution'].format(tv.resolucion))
+                print(translations[current_language]['tvh_refresh_rate'].format(tv.frecuencia))
+                print(translations[current_language]['tvh_processor'].format(tv.procesador))
+                print(translations[current_language]['tvh_price'].format(tv.precio))
 
     # --- Ejecución del programa ---
     marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo = obtener_datos_usuario()
@@ -953,7 +1223,7 @@ def run_tv_helper():
     mejores_opciones = encontrar_mejor_tv(DB_TELEVISORES_REALES, marca_preferida, tamano_deseado, resolucion_deseada, presupuesto_maximo)
     mostrar_recomendacion(mejores_opciones)
     
-    input("\nPulsa Enter para volver a TerminalCoin...")
+    input(translations[current_language]['tvh_return_to_main'])
 
 # --- FUNCIONALIDAD DEL PROGRAMA MONSTER BATTLE CREATOR ---
 def run_monster_battle_creator():
@@ -969,7 +1239,7 @@ def run_monster_battle_creator():
         ("Cabeza de Alien", "Grandes ojos negros y una forma alargada.", "  /\\_/\\\n | `~` |\n  \\___/"),
         ("Cabeza de Demonio", "Cuernos retorcidos y una mirada malvada.", " .-'--'-.\n/        \\\n|  O    O  |\n \\    --   /\n  `--__--'")
     ]
-
+    
     opciones_cuerpo = [
         ("Cuerpo de Golem", "Fuerte y robusto, hecho de piedra.", "  [O.O]\n  /   \\\n /_____\\"),
         ("Cuerpo de Slime", "Viscoso y gelatinoso, capaz de cambiar de forma.", "  ~~~~~\n /     \\\n|_______|"),
@@ -990,6 +1260,94 @@ def run_monster_battle_creator():
         ("Piernas de Lagarto", "Capaces de escalar superficies verticales.", "  /  \\  /  \\\n (____)(____)"),
         ("Piernas de Araña", "Múltiples patas para una movilidad superior.", "  / \\ / \\\n /   \   \\\n  -   -")
     ]
+    
+    # Mapeo de traducciones para las partes del monstruo
+    part_translations = {
+        'es': {
+            'head_cyclops_name': "Cabeza de Cíclope", 'head_cyclops_desc': "Un solo ojo y un cuerno en espiral.",
+            'head_dragon_name': "Cabeza de Dragón", 'head_dragon_desc': "Dientes afilados y un aliento ardiente.",
+            'head_alien_name': "Cabeza de Alien", 'head_alien_desc': "Grandes ojos negros y una forma alargada.",
+            'head_demon_name': "Cabeza de Demonio", 'head_demon_desc': "Cuernos retorcidos y una mirada malvada.",
+            'body_golem_name': "Cuerpo de Golem", 'body_golem_desc': "Fuerte y robusto, hecho de piedra.",
+            'body_slime_name': "Cuerpo de Slime", 'body_slime_desc': "Viscoso y gelatinoso, capaz de cambiar de forma.",
+            'body_spider_name': "Cuerpo de Araña", 'body_spider_desc': "Ocho patas peludas y un cuerpo redondo.",
+            'body_mummy_name': "Cuerpo de Momia", 'body_mummy_desc': "Vendado y frágil, pero con gran resistencia.",
+            'arms_robot_name': "Brazos de Robot", 'arms_robot_desc': "Fuertes pero lentos, hechos de metal.",
+            'arms_monkey_name': "Brazos de Mono", 'arms_monkey_desc': "Ágiles pero débiles, con pulgares oponibles.",
+            'arms_dragon_name': "Brazos de Dragón", 'arms_dragon_desc': "Lentos, pero fuertes, con garras afiladas.",
+            'arms_tentacle_name': "Brazos de Tentáculos", 'arms_tentacle_desc': "Flexibles y largos, para agarrar objetos.",
+            'legs_human_name': "Piernas Humanoides", 'legs_human_desc': "Equilibradas y versátiles.",
+            'legs_centaur_name': "Piernas de Centauro", 'legs_centaur_desc': "Fuertes y rápidas, con pezuñas.",
+            'legs_lizard_name': "Piernas de Lagarto", 'legs_lizard_desc': "Capaces de escalar superficies verticales.",
+            'legs_spider_name': "Piernas de Araña", 'legs_spider_desc': "Múltiples patas para una movilidad superior.",
+        },
+        'en': {
+            'head_cyclops_name': "Cyclops Head", 'head_cyclops_desc': "A single eye and a spiral horn.",
+            'head_dragon_name': "Dragon Head", 'head_dragon_desc': "Sharp teeth and fiery breath.",
+            'head_alien_name': "Alien Head", 'head_alien_desc': "Large black eyes and an elongated shape.",
+            'head_demon_name': "Demon Head", 'head_demon_desc': "Twisted horns and an evil glare.",
+            'body_golem_name': "Golem Body", 'body_golem_desc': "Strong and sturdy, made of stone.",
+            'body_slime_name': "Slime Body", 'body_slime_desc': "Viscous and gelatinous, able to change shape.",
+            'body_spider_name': "Spider Body", 'body_spider_desc': "Eight furry legs and a round body.",
+            'body_mummy_name': "Mummy Body", 'body_mummy_desc': "Bandaged and frail, but with great resistance.",
+            'arms_robot_name': "Robot Arms", 'arms_robot_desc': "Strong but slow, made of metal.",
+            'arms_monkey_name': "Monkey Arms", 'arms_monkey_desc': "Agile but weak, with opposable thumbs.",
+            'arms_dragon_name': "Dragon Arms", 'arms_dragon_desc': "Slow but strong, with sharp claws.",
+            'arms_tentacle_name': "Tentacle Arms", 'arms_tentacle_desc': "Flexible and long, for grabbing objects.",
+            'legs_human_name': "Humanoid Legs", 'legs_human_desc': "Balanced and versatile.",
+            'legs_centaur_name': "Centaur Legs", 'legs_centaur_desc': "Strong and fast, with hooves.",
+            'legs_lizard_name': "Lizard Legs", 'legs_lizard_desc': "Able to climb vertical surfaces.",
+            'legs_spider_name': "Spider Legs", 'legs_spider_desc': "Multiple legs for superior mobility.",
+        },
+        'de': {
+            'head_cyclops_name': "Zyklopenkopf", 'head_cyclops_desc': "Ein einziges Auge und ein spiralförmiges Horn.",
+            'head_dragon_name': "Drachenkopf", 'head_dragon_desc': "Scharfe Zähne und feuriger Atem.",
+            'head_alien_name': "Alien-Kopf", 'head_alien_desc': "Große schwarze Augen und eine längliche Form.",
+            'head_demon_name': "Dämonenkopf", 'head_demon_desc': "Gedrehte Hörner und ein böser Blick.",
+            'body_golem_name': "Golem-Körper", 'body_golem_desc': "Stark und robust, aus Stein gemacht.",
+            'body_slime_name': "Schleim-Körper", 'body_slime_desc': "Schleimig und gallertartig, kann die Form ändern.",
+            'body_spider_name': "Spinnen-Körper", 'body_spider_desc': "Acht haarige Beine und ein runder Körper.",
+            'body_mummy_name': "Mumien-Körper", 'body_mummy_desc': "Verbandelt und zerbrechlich, aber mit großer Widerstandsfähigkeit.",
+            'arms_robot_name': "Roboter-Arme", 'arms_robot_desc': "Stark, aber langsam, aus Metall.",
+            'arms_monkey_name': "Affen-Arme", 'arms_monkey_desc': "Agil, aber schwach, mit Daumen.",
+            'arms_dragon_name': "Drachen-Arme", 'arms_dragon_desc': "Langsam, aber stark, mit scharfen Krallen.",
+            'arms_tentacle_name': "Tentakel-Arme", 'arms_tentacle_desc': "Flexibel und lang, um Objekte zu greifen.",
+            'legs_human_name': "Humanoide Beine", 'legs_human_desc': "Ausbalanciert und vielseitig.",
+            'legs_centaur_name': "Zentauren-Beine", 'legs_centaur_desc': "Stark und schnell, mit Hufen.",
+            'legs_lizard_name': "Eidechsen-Beine", 'legs_lizard_desc': "Können vertikale Oberflächen erklimmen.",
+            'legs_spider_name': "Spinnen-Beine", 'legs_spider_desc': "Mehrere Beine für überlegene Mobilität.",
+        }
+    }
+
+    # Asigna las traducciones a las listas de partes
+    opciones_cabeza = [
+        (part_translations[current_language]['head_cyclops_name'], part_translations[current_language]['head_cyclops_desc'], "  _.-.\n  /  _ \\\n |  (o)  |\n  \\  _  /\n   `---'"),
+        (part_translations[current_language]['head_dragon_name'], part_translations[current_language]['head_dragon_desc'], "  /vvvvv\\\n ( O   O )\n  \\  ^  /\n   \\___/"),
+        (part_translations[current_language]['head_alien_name'], part_translations[current_language]['head_alien_desc'], "  /\\_/\\\n | `~` |\n  \\___/"),
+        (part_translations[current_language]['head_demon_name'], part_translations[current_language]['head_demon_desc'], " .-'--'-.\n/        \\\n|  O    O  |\n \\    --   /\n  `--__--'")
+    ]
+    
+    opciones_cuerpo = [
+        (part_translations[current_language]['body_golem_name'], part_translations[current_language]['body_golem_desc'], "  [O.O]\n  /   \\\n /_____\\"),
+        (part_translations[current_language]['body_slime_name'], part_translations[current_language]['body_slime_desc'], "  ~~~~~\n /     \\\n|_______|"),
+        (part_translations[current_language]['body_spider_name'], part_translations[current_language]['body_spider_desc'], "  /\\__/\\\n /      \\\n |______|"),
+        (part_translations[current_language]['body_mummy_name'], part_translations[current_language]['body_mummy_desc'], " |---o---|\n |-------|\n  \\-----/")
+    ]
+        
+    opciones_brazos = [
+        (part_translations[current_language]['arms_robot_name'], part_translations[current_language]['arms_robot_desc'], "  _|_|_\n (_____)"),
+        (part_translations[current_language]['arms_monkey_name'], part_translations[current_language]['arms_monkey_desc'], "  /\\ /\\\n ( (o) )\n  \\   /"),
+        (part_translations[current_language]['arms_dragon_name'], part_translations[current_language]['arms_dragon_desc'], "  || ||\n  \\ //\n   V V"),
+        (part_translations[current_language]['arms_tentacle_name'], part_translations[current_language]['arms_tentacle_desc'], " ()()()()\n (      )\n  \\____/")
+    ]
+
+    opciones_piernas = [
+        (part_translations[current_language]['legs_human_name'], part_translations[current_language]['legs_human_desc'], "  |_|  |_|\n  | |  | |"),
+        (part_translations[current_language]['legs_centaur_name'], part_translations[current_language]['legs_centaur_desc'], "  | |  | |\n (  ) (  )"),
+        (part_translations[current_language]['legs_lizard_name'], part_translations[current_language]['legs_lizard_desc'], "  /  \\  /  \\\n (____)(____)"),
+        (part_translations[current_language]['legs_spider_name'], part_translations[current_language]['legs_spider_desc'], "  / \\ / \\\n /   \   \\\n  -   -")
+    ]
+
 
     # --- Arte ASCII de los trofeos ---
     TROFEO_CAMPEON = """
@@ -1036,6 +1394,23 @@ def run_monster_battle_creator():
         "El Devorador de Mundos", "El Dragón Espectral", "El Titán Ancestral",
         "La Reina Silente", "El Amo de las Sombras"
     ]
+    
+    rival_translations = {
+        'es': {
+            'rivals': ["Goro el Implacable", "Sombra de la Furia", "Gólem Dorado", "Lama Tóxica", "El Guerrero Oxidado", "Besta de las Profundidades", "El Acechador Sombrío", "El Vigilante de la Cripta"],
+            'bosses': ["El Devorador de Mundos", "El Dragón Espectral", "El Titán Ancestral", "La Reina Silente", "El Amo de las Sombras"],
+        },
+        'en': {
+            'rivals': ["Goro the Relentless", "Shadow of Fury", "Golden Golem", "Toxic Slime", "The Rusted Warrior", "Beast of the Depths", "The Shrouded Stalker", "The Crypt Watcher"],
+            'bosses': ["The World Eater", "The Spectral Dragon", "The Ancestral Titan", "The Silent Queen", "The Master of Shadows"],
+        },
+        'de': {
+            'rivals': ["Goro der Unerbittliche", "Schatten der Wut", "Goldener Golem", "Toxischer Schleim", "Der Rostige Krieger", "Bestie der Tiefen", "Der Verhüllte Stalker", "Der Krypta-Wächter"],
+            'bosses': ["Der Weltenfresser", "Der Spektraldrache", "Der Urtitan", "Die Stille Königin", "Der Meister der Schatten"],
+        }
+    }
+    nombres_rivales = rival_translations[current_language]['rivals']
+    nombres_jefes = rival_translations[current_language]['bosses']
 
     # --- Funciones de Juego ---
     def limpiar_pantalla():
@@ -1046,10 +1421,10 @@ def run_monster_battle_creator():
         """Muestra el título del programa."""
         limpiar_pantalla()
         print(Fore.CYAN + Style.BRIGHT + "=" * 60)
-        print("== " + "C R E A D O R   Y   T O R N E O   D E   M O N S T R U O S".center(54) + " ==")
+        print("== " + translations[current_language]['mbc_title_1'].center(54) + " ==")
         print("=" * 60)
         print(Style.RESET_ALL)
-        print(Fore.WHITE + "¡Crea a tu monstruo para el torneo! " + Style.RESET_ALL)
+        print(Fore.WHITE + translations[current_language]['mbc_intro_1'] + Style.RESET_ALL)
         time.sleep(1)
 
     def seleccionar_parte(titulo, opciones):
@@ -1062,17 +1437,17 @@ def run_monster_battle_creator():
             for i, (nombre, descripcion, _) in enumerate(opciones, 1):
                 print(f"{Fore.WHITE}{i}. {nombre}: {descripcion}{Style.RESET_ALL}")
             
-            eleccion = input(f"\nElige tu opción (1, 2, 3 o 4): ")
+            eleccion = input(f"\n{translations[current_language]['mbc_choice_prompt']} (1, 2, 3 {translations[current_language]['invalid_option_song']} 4): ")
             
             try:
                 indice = int(eleccion) - 1
                 if 0 <= indice < len(opciones):
                     return opciones[indice]
                 else:
-                    print(Fore.RED + "Opción inválida. Inténtalo de nuevo." + Style.RESET_ALL)
+                    print(Fore.RED + translations[current_language]['invalid_option'] + Style.RESET_ALL)
                     time.sleep(2)
             except ValueError:
-                print(Fore.RED + "Entrada no válida. Por favor, ingresa un número." + Style.RESET_ALL)
+                print(Fore.RED + translations[current_language]['invalid_option'] + Style.RESET_ALL)
                 time.sleep(2)
 
     def generar_monstruo_aleatorio(nombre, es_boss=False):
@@ -1154,8 +1529,8 @@ def run_monster_battle_creator():
         barra_vida_oponente = "█" * int(vida_oponente_clamped / 10)
         barra_energia = "█" * int(energia_jugador_clamped / 10)
         
-        print(f"\n{Fore.GREEN}{Style.BRIGHT}VIDA:{Style.RESET_ALL} {Fore.GREEN}{barra_vida_jugador}{Fore.WHITE:<10}{Fore.RED}{Style.BRIGHT}VS{Style.RESET_ALL}{Fore.WHITE:>10}{Fore.RED}{barra_vida_oponente}{Fore.RED} VIDA:{Style.RESET_ALL}")
-        print(f"{Fore.BLUE}ENERGÍA:{Style.RESET_ALL} {Fore.BLUE}{barra_energia}{Style.RESET_ALL}")
+        print(f"\n{Fore.GREEN}{Style.BRIGHT}{translations[current_language]['mbc_health']}{Style.RESET_ALL} {Fore.GREEN}{barra_vida_jugador}{Fore.WHITE:<10}{Fore.RED}{Style.BRIGHT}{translations[current_language]['mbc_vs']}{Style.RESET_ALL}{Fore.WHITE:>10}{Fore.RED}{barra_vida_oponente}{Fore.RED} {translations[current_language]['mbc_health']}{Style.RESET_ALL}")
+        print(f"{Fore.BLUE}{translations[current_language]['mbc_energy']}{Style.RESET_ALL} {Fore.BLUE}{barra_energia}{Style.RESET_ALL}")
         
     def pedir_combinacion(ronda, tipo_ataque="defensa"):
         """
@@ -1173,11 +1548,9 @@ def run_monster_battle_creator():
             tiempo_espera = 0.5
             
         if tipo_ataque == "defensa":
-            print(f"\n¡EL RIVAL ATACA! Rápido, presiona la combinación '{Fore.YELLOW}{key1} + {key2}{Style.RESET_ALL}' para defenderte.")
-            print(f"Tienes {tiempo_espera:.2f} segundos para reaccionar...")
+            print(f"\n{translations[current_language]['mbc_prompt_defense'].format(Fore.YELLOW + key1 + Style.RESET_ALL, Fore.YELLOW + key2 + Style.RESET_ALL, tiempo_espera)}")
         else:
-            print(f"\n¡ES TU TURNO! Presiona la combinación '{Fore.YELLOW}{key1} + {key2}{Style.RESET_ALL}' para atacar.")
-            print(f"Tienes {tiempo_espera:.2f} segundos para reaccionar...")
+            print(f"\n{translations[current_language]['mbc_prompt_attack'].format(Fore.YELLOW + key1 + Style.RESET_ALL, Fore.YELLOW + key2 + Style.RESET_ALL, tiempo_espera)}")
 
         start_time = time.time()
         
@@ -1194,8 +1567,8 @@ def run_monster_battle_creator():
         energia_jugador = float(jugador['energia'])
         vida_oponente = float(oponente['vida'])
 
-        print(Fore.CYAN + "\n=== ¡COMIENZA LA BATALLA! ===" + Style.RESET_ALL)
-        input("Presiona Enter para continuar...")
+        print(Fore.CYAN + translations[current_language]['mbc_battle_start'] + Style.RESET_ALL)
+        input(translations[current_language]['mbc_press_to_continue'])
         
         while vida_jugador > 0 and vida_oponente > 0:
             limpiar_pantalla()
@@ -1203,31 +1576,31 @@ def run_monster_battle_creator():
             mostrar_monstruos_en_batalla(jugador, oponente)
             
             # --- Fase de Defensa del Jugador ---
-            print(Fore.RED + "\n--- FASE DE DEFENSA ---" + Style.RESET_ALL)
+            print(Fore.RED + f"\n--- {translations[current_language]['mbc_phase_defense'].replace('---','')} ---" + Style.RESET_ALL)
             if pedir_combinacion(ronda, tipo_ataque="defensa"):
-                print(Fore.GREEN + "\n¡Combinación exitosa! Has creado una barrera y te has defendido del ataque del rival." + Style.RESET_ALL)
+                print(Fore.GREEN + translations[current_language]['mbc_defense_success'] + Style.RESET_ALL)
                 time.sleep(2)
             else:
                 daño_oponente = random.randint(15, 30)
                 if es_boss and ronda == 4:
-                    print(f"¡El ataque del jefe es devastador!")
+                    print(translations[current_language]['mbc_boss_attack_strong'])
                     daño_oponente = vida_jugador + 10
                 vida_jugador -= daño_oponente
-                print(Fore.RED + f"\n¡Combinación fallida! {oponente['nombre']} te golpea. Recibes {daño_oponente} de daño." + Style.RESET_ALL)
+                print(Fore.RED + translations[current_language]['mbc_defense_fail'].format(oponente['nombre'], daño_oponente) + Style.RESET_ALL)
                 time.sleep(2)
             
             if vida_jugador <= 0:
                 break
                 
             # --- Fase de Ataque del Jugador ---
-            print(Fore.BLUE + "\n--- FASE DE ATAQUE ---" + Style.RESET_ALL)
+            print(Fore.BLUE + f"\n--- {translations[current_language]['mbc_phase_attack'].replace('---','')} ---" + Style.RESET_ALL)
             if pedir_combinacion(ronda, tipo_ataque="ofensiva"):
                 daño_jugador = random.randint(20, 40)
                 vida_oponente -= daño_jugador
-                print(Fore.GREEN + f"\n¡Combinación exitosa! ¡Has atacado a {oponente['nombre']} y le has hecho {daño_jugador} de daño!" + Style.RESET_ALL)
+                print(Fore.GREEN + translations[current_language]['mbc_attack_success'].format(oponente['nombre'], daño_jugador) + Style.RESET_ALL)
                 time.sleep(2)
             else:
-                print(Fore.RED + "\n¡Combinación fallida! Pierdes tu turno de ataque." + Style.RESET_ALL)
+                print(Fore.RED + translations[current_language]['mbc_attack_fail'] + Style.RESET_ALL)
                 time.sleep(2)
 
         jugador['vida'] = vida_jugador
@@ -1256,28 +1629,28 @@ def run_monster_battle_creator():
     def mostrar_sala_trofeos(progreso):
         """Muestra la sala de trofeos del jugador."""
         limpiar_pantalla()
-        print(Fore.YELLOW + Style.BRIGHT + "=== SALA DE TROFEOS ===" + Style.RESET_ALL)
-        print(Fore.WHITE + f"Victorias en el Torneo: {progreso['victorias']}\n" + Style.RESET_ALL)
+        print(Fore.YELLOW + Style.BRIGHT + translations[current_language]['mbc_trophy_room_title'] + Style.RESET_ALL)
+        print(Fore.WHITE + translations[current_language]['mbc_trophies_won_count'].format(progreso['victorias']) + "\n" + Style.RESET_ALL)
         
         if "leyenda" in progreso['trofeos']:
-            print(Fore.CYAN + "--- Trofeo de Leyenda ---" + Style.RESET_ALL)
+            print(Fore.CYAN + translations[current_language]['mbc_trophy_legend_title'] + Style.RESET_ALL)
             print(Fore.CYAN + TROFEO_LEYENDA + Style.RESET_ALL)
-            print(Fore.WHITE + "¡Has ganado 10 torneos! ¡Eres una leyenda del combate!\n" + Style.RESET_ALL)
+            print(Fore.WHITE + translations[current_language]['mbc_trophy_legend_desc'] + "\n" + Style.RESET_ALL)
         
         if "veterano" in progreso['trofeos']:
-            print(Fore.GREEN + "--- Trofeo de Veterano ---" + Style.RESET_ALL)
+            print(Fore.GREEN + translations[current_language]['mbc_trophy_veteran_title'] + Style.RESET_ALL)
             print(Fore.GREEN + TROFEO_VETERANO + Style.RESET_ALL)
-            print(Fore.WHITE + "¡Has ganado 5 torneos! Un verdadero veterano.\n" + Style.RESET_ALL)
+            print(Fore.WHITE + translations[current_language]['mbc_trophy_veteran_desc'] + "\n" + Style.RESET_ALL)
 
         if "campeon" in progreso['trofeos']:
-            print(Fore.YELLOW + "--- Trofeo de Campeón ---" + Style.RESET_ALL)
+            print(Fore.YELLOW + translations[current_language]['mbc_trophy_champion_title'] + Style.RESET_ALL)
             print(Fore.YELLOW + TROFEO_CAMPEON + Style.RESET_ALL)
-            print(Fore.WHITE + "¡Has derrotado al Jefe Final y ganado un torneo!\n" + Style.RESET_ALL)
+            print(Fore.WHITE + translations[current_language]['mbc_trophy_champion_desc'] + "\n" + Style.RESET_ALL)
         
         if not progreso['trofeos']:
-            print(Fore.WHITE + "Aún no tienes trofeos. ¡Gana el torneo para conseguir el primero!\n" + Style.RESET_ALL)
+            print(Fore.WHITE + translations[current_language]['mbc_no_trophies'] + "\n" + Style.RESET_ALL)
         
-        input(Fore.BLUE + "Presiona Enter para volver al menú principal..." + Style.RESET_ALL)
+        input(Fore.BLUE + translations[current_language]['mbc_return_to_menu'] + Style.RESET_ALL)
     
     # Bucle principal del juego Monster Battle Creator
     while True:
@@ -1285,26 +1658,26 @@ def run_monster_battle_creator():
         
         limpiar_pantalla()
         print(Fore.CYAN + Style.BRIGHT + "=" * 60)
-        print("== " + "M E N Ú   P R I N C I P A L".center(54) + " ==")
+        print("== " + translations[current_language]['mbc_menu_title'].center(54) + " ==")
         print("=" * 60)
         print(Style.RESET_ALL)
-        print(Fore.WHITE + "1. ¡Comenzar un nuevo torneo!" + Style.RESET_ALL)
-        print(Fore.YELLOW + "2. Ver mi Sala de Trofeos" + Style.RESET_ALL)
-        print(Fore.RED + "3. Salir" + Style.RESET_ALL)
+        print(Fore.WHITE + translations[current_language]['mbc_option_1'] + Style.RESET_ALL)
+        print(Fore.YELLOW + translations[current_language]['mbc_option_2'] + Style.RESET_ALL)
+        print(Fore.RED + translations[current_language]['mbc_option_3'] + Style.RESET_ALL)
         
-        opcion = input("\nElige una opción: ")
+        opcion = input(translations[current_language]['mbc_choice_prompt'])
         
         if opcion == '1':
             mostrar_encabezado()
             time.sleep(1)
             
-            print(Fore.GREEN + "\n--- CREA A TU MONSTRUO PARA EL TORNEO ---" + Style.RESET_ALL)
-            _, descripcion_cabeza, arte_cabeza = seleccionar_parte("Selecciona una cabeza para tu monstruo", opciones_cabeza)
-            _, descripcion_cuerpo, arte_cuerpo = seleccionar_parte("Ahora, selecciona un cuerpo", opciones_cuerpo)
-            _, descripcion_brazos, arte_brazos = seleccionar_parte("Y por último, elige unos brazos", opciones_brazos)
-            _, descripcion_piernas, arte_piernas = seleccionar_parte("Finalmente, elige unas piernas", opciones_piernas)
+            print(Fore.GREEN + f"\n--- {translations[current_language]['mbc_intro_2'].replace('---','')} ---" + Style.RESET_ALL)
+            _, descripcion_cabeza, arte_cabeza = seleccionar_parte(translations[current_language]['mbc_select_head'], opciones_cabeza)
+            _, descripcion_cuerpo, arte_cuerpo = seleccionar_parte(translations[current_language]['mbc_select_body'], opciones_cuerpo)
+            _, descripcion_brazos, arte_brazos = seleccionar_parte(translations[current_language]['mbc_select_arms'], opciones_brazos)
+            _, descripcion_piernas, arte_piernas = seleccionar_parte(translations[current_language]['mbc_select_legs'], opciones_piernas)
             
-            nombre_jugador = input("\n¡Ponle un nombre a tu campeón!: ")
+            nombre_jugador = input(translations[current_language]['mbc_prompt_name'])
 
             monstruo_jugador = generar_monstruo_aleatorio(nombre_jugador)
             monstruo_jugador["partes"] = {
@@ -1316,30 +1689,25 @@ def run_monster_battle_creator():
 
             limpiar_pantalla()
             print(Fore.GREEN + Style.BRIGHT + "=" * 50)
-            print("== " + "¡T U   M O N S T R U O   H A   S I D O   C R E A D O !".center(44) + " ==")
+            print("== " + translations[current_language]['mbc_created_title'].center(44) + " ==")
             print("=" * 50 + Style.RESET_ALL)
             mostrar_monstruo(monstruo_jugador)
-            print(Fore.WHITE + "\n--- Características de tu campeón ---" + Style.RESET_ALL)
-            print(f"{Fore.WHITE}CABEZA: {descripcion_cabeza}")
-            print(f"{Fore.WHITE}CUERPO: {descripcion_cuerpo}")
-            print(f"{Fore.WHITE}BRAZOS: {descripcion_brazos}")
-            print(f"{Fore.WHITE}PIERNAS: {descripcion_piernas}{Style.RESET_ALL}")
-            input(Fore.BLUE + "\nPresiona Enter para comenzar el torneo..." + Style.RESET_ALL)
+            print(Fore.WHITE + f"\n--- {translations[current_language]['mbc_char_title'].replace('---','')} ---" + Style.RESET_ALL)
+            print(f"{Fore.WHITE}{translations[current_language]['mbc_head_char'].format(descripcion_cabeza)}")
+            print(f"{Fore.WHITE}{translations[current_language]['mbc_body_char'].format(descripcion_cuerpo)}")
+            print(f"{Fore.WHITE}{translations[current_language]['mbc_arms_char'].format(descripcion_brazos)}")
+            print(f"{Fore.WHITE}{translations[current_language]['mbc_legs_char'].format(descripcion_piernas)}{Style.RESET_ALL}")
+            input(Fore.BLUE + translations[current_language]['mbc_press_to_start'] + Style.RESET_ALL)
             
             # --- TUTORIAL DE JUEGO ---
             limpiar_pantalla()
-            print(Fore.CYAN + Style.BRIGHT + "=== TUTORIAL DE COMBATE ===" + Style.RESET_ALL)
-            print(Fore.WHITE + "¡Bienvenido al Torneo de Monstruos! Para ganar, deberás dominar las combinaciones de teclas.")
-            print("La batalla se divide en dos fases por turno:")
-            print(f"\n{Fore.RED}{Style.BRIGHT}1. FASE DE DEFENSA:{Style.RESET_ALL} El rival te atacará.")
-            print(f"   Debes presionar una combinación de 2 teclas (ej: 'a' + 's') para defenderte.")
-            print(f"   Si lo logras, te defenderás. Si fallas, recibirás daño.")
-            print(f"\n{Fore.BLUE}{Style.BRIGHT}2. FASE DE ATAQUE:{Style.RESET_ALL} Es tu turno.")
-            print(f"   Debes presionar una nueva combinación de 2 teclas para atacar.")
-            print(f"   Si lo consigues, dañarás al rival. Si no, perderás el turno.")
-            print(f"\n{Fore.YELLOW}{Style.BRIGHT}¡Importante!:{Style.RESET_ALL} El tiempo para reaccionar se reduce en cada ronda.")
-            print("   En la batalla final, deberás ser extremadamente rápido para sobrevivir.")
-            input(Fore.BLUE + "\nPresiona Enter para continuar y comenzar la primera batalla..." + Style.RESET_ALL)
+            print(Fore.CYAN + Style.BRIGHT + translations[current_language]['mbc_tutorial_title'] + Style.RESET_ALL)
+            print(Fore.WHITE + translations[current_language]['mbc_tutorial_intro'])
+            print(translations[current_language]['mbc_tutorial_phases'])
+            print(f"\n{Fore.RED}{Style.BRIGHT}{translations[current_language]['mbc_tutorial_defense']}{Style.RESET_ALL} {translations[current_language]['mbc_tutorial_defense_desc']}")
+            print(f"\n{Fore.BLUE}{Style.BRIGHT}{translations[current_language]['mbc_tutorial_attack']}{Style.RESET_ALL} {translations[current_language]['mbc_tutorial_attack_desc']}")
+            print(f"\n{Fore.YELLOW}{Style.BRIGHT}{translations[current_language]['mbc_tutorial_important']}{Style.RESET_ALL} {translations[current_language]['mbc_tutorial_important_desc']}")
+            input(Fore.BLUE + translations[current_language]['mbc_tutorial_continue'] + Style.RESET_ALL)
 
             # --- FASE 2: EL TORNEO ---
             rivales_torneo = random.sample(nombres_rivales, 3)
@@ -1352,26 +1720,26 @@ def run_monster_battle_creator():
                 es_boss = (nombre_rival == nombre_jefe_final)
                 limpiar_pantalla()
                 if es_boss:
-                    print(Fore.RED + f"--- ¡EL JEFE FINAL! ---" + Style.RESET_ALL)
+                    print(Fore.RED + f"--- {translations[current_language]['mbc_win_final_boss'].replace('!!!','').replace('YOU HAVE DEFEATED THE FINAL BOSS AND WON THE TOURNAMENT','FINAL BOSS').upper().replace('DEFEATED THE FINAL BOSS AND WON THE TOURNAMENT','').replace('HAVE','').replace('AND','').replace('WON','').replace('THE','').replace('FINAL','').replace('BOSS','') } ---" + Style.RESET_ALL)
                     oponente = generar_monstruo_aleatorio(nombre_rival, es_boss=True)
                 else:
-                    print(Fore.YELLOW + f"--- BATALLA {i+1} DE {len(rivales_torneo)} ---" + Style.RESET_ALL)
+                    print(Fore.YELLOW + f"--- {translations[current_language]['invalid_upgrade_id'].replace('invalid upgrade id',f'BATTLE {i+1} OF {len(rivales_torneo)}') } ---" + Style.RESET_ALL)
                     oponente = generar_monstruo_aleatorio(nombre_rival)
 
-                print(f"\n¡Tu monstruo {monstruo_jugador['nombre']} se enfrenta a {oponente['nombre']}!")
-                input("Presiona Enter para luchar...")
+                print(f"\n{translations[current_language]['mbc_intro_1'].replace('Create your monster for the tournament!','Your monster {} faces {}!').format(monstruo_jugador['nombre'], oponente['nombre'])}")
+                input(translations[current_language]['press_enter_to_continue'])
 
                 ganador = simular_batalla_street_fighter(monstruo_jugador, oponente, es_boss, i+1)
 
                 if ganador['nombre'] == monstruo_jugador['nombre']:
-                    print(Fore.GREEN + f"\n¡Has derrotado a {oponente['nombre']}! ¡Felicidades!" + Style.RESET_ALL)
+                    print(Fore.GREEN + translations[current_language]['mbc_win_battle'].format(oponente['nombre']) + Style.RESET_ALL)
                     if es_boss:
-                        print(Fore.YELLOW + Style.BRIGHT + "\n¡¡¡HAS DERROTADO AL JEFE FINAL Y GANADO EL TORNEO!!!" + Style.RESET_ALL)
+                        print(Fore.YELLOW + Style.BRIGHT + translations[current_language]['mbc_win_final_boss'] + Style.RESET_ALL)
                         torneo_ganado = True
                         break
-                    input("\nPresiona Enter para pasar a la siguiente batalla...")
+                    input(translations[current_language]['press_enter_to_continue'])
                 else:
-                    print(Fore.RED + f"\n¡Has sido derrotado por {oponente['nombre']}! ¡El torneo ha terminado!" + Style.RESET_ALL)
+                    print(Fore.RED + translations[current_language]['mbc_lose_battle'].format(oponente['nombre']) + Style.RESET_ALL)
                     break
 
             # Actualizar el progreso al final del torneo
@@ -1381,10 +1749,10 @@ def run_monster_battle_creator():
                     progreso['trofeos'].append('campeon')
                 if progreso['victorias'] >= 5 and "veterano" not in progreso['trofeos']:
                     progreso['trofeos'].append('veterano')
-                    print(Fore.GREEN + "\n¡Has desbloqueado el Trofeo de Veterano!" + Style.RESET_ALL)
+                    print(Fore.GREEN + translations[current_language]['mbc_win_trophy_veteran'] + Style.RESET_ALL)
                 if progreso['victorias'] >= 10 and "leyenda" not in progreso['trofeos']:
                     progreso['trofeos'].append('leyenda')
-                    print(Fore.CYAN + "\n¡Has desbloqueado el Trofeo de Leyenda! ¡Eres un maestro!" + Style.RESET_ALL)
+                    print(Fore.CYAN + translations[current_language]['mbc_win_trophy_legend'] + Style.RESET_ALL)
             
             guardar_progreso(progreso)
 
@@ -1392,23 +1760,23 @@ def run_monster_battle_creator():
             if monstruo_jugador['vida'] > 0:
                 limpiar_pantalla()
                 print(Fore.YELLOW + Style.BRIGHT + "=" * 50)
-                print("== " + "¡VICTORIA! ¡ERES EL CAMPEÓN DEL TORNEO!".center(44) + " ==")
+                print("== " + translations[current_language]['mbc_final_victory'].center(44) + " ==")
                 print("=" * 50 + Style.RESET_ALL)
                 mostrar_monstruo(monstruo_jugador)
-                print(Fore.GREEN + "\n¡Tu monstruo ha vencido a todos los rivales y al JEFE FINAL!" + Style.RESET_ALL)
+                print(Fore.GREEN + translations[current_language]['mbc_final_victory_desc'] + Style.RESET_ALL)
             
-            print("\n¿Quieres jugar de nuevo? (Presiona Enter para reiniciar)")
+            print(translations[current_language]['mbc_play_again'])
             input()
             
         elif opcion == '2':
             mostrar_sala_trofeos(progreso)
             
         elif opcion == '3':
-            print("Saliendo del juego...")
+            print(translations[current_language]['mbc_exit_game'])
             break
             
         else:
-            print(Fore.RED + "Opción no válida. Por favor, elige 1, 2 o 3." + Style.RESET_ALL)
+            print(Fore.RED + translations[current_language]['mbc_invalid_menu_option'] + Style.RESET_ALL)
             time.sleep(2)
 
 # --- Bucle principal del juego ---
